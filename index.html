@@ -7,125 +7,118 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
-        body { background-color: #080808; color: #ffffff; overflow-x: hidden; font-family: sans-serif; margin: 0; scroll-behavior: smooth; }
+        body, html { margin: 0; padding: 0; background: #080808; overflow: hidden; scroll-behavior: smooth; font-family: sans-serif; }
+        .section { height: 100vh; width: 100vw; position: relative; display: flex; align-items: center; justify-content: center; }
+        video, .reveal-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
         
+        /* Polaroid Rain Effect */
         .polaroid {
-            background: #ffffff; padding: 8px 8px 30px 8px; border-radius: 2px;
-            box-shadow: 0 10px 25px rgba(209, 179, 255, 0.2); width: 100%;
+            background: #ffffff; padding: 5px 5px 20px 5px; border-radius: 2px;
+            box-shadow: 0 5px 20px rgba(209, 179, 255, 0.4); width: 130px;
         }
-        .polaroid img, .polaroid video { width: 100%; height: auto; object-fit: contain; display: block; background: #eee; }
-        .caption-text { color: #333; text-align: center; font-family: 'Georgia', serif; font-size: 0.75rem; margin-top: 8px; font-weight: bold; }
+        .polaroid img { width: 100%; height: auto; display: block; border: 1px solid #eee; object-fit: contain; }
+        .pol-cap { color: #333; text-align: center; font-size: 0.7rem; font-weight: bold; margin-top: 5px; font-family: 'Georgia', serif; }
 
-        .timeline-wrap { position: relative; max-width: 500px; margin: 50px auto; padding: 0 20px; }
-        .timeline-line { position: absolute; left: 30px; width: 3px; height: 100%; background: linear-gradient(to bottom, #D1B3FF, #a855f7); }
-        .timeline-block { position: relative; margin-bottom: 60px; padding-left: 60px; }
-        .age-marker { 
-            position: absolute; left: 18px; width: 26px; height: 26px; 
-            background: #a855f7; border: 4px solid #080808; border-radius: 50%; z-index: 10;
+        .falling-photo {
+            position: fixed; top: -25vh; z-index: 100;
+            animation: fallDown linear forwards;
         }
-        .year-label { color: #D1B3FF; font-weight: bold; font-size: 1.1rem; margin-bottom: 10px; display: block; }
+        @keyframes fallDown { to { transform: translateY(125vh) rotate(360deg); } }
 
-        .hidden-section { display: none; }
-        .btn-purple { background: linear-gradient(135deg, #a855f7 0%, #D1B3FF 100%); color: #000; transition: all 0.3s; }
+        /* Blur Reveal Logic */
+        .blur-reveal { filter: blur(35px); transition: filter 2.5s ease-in-out; }
+        .clear-now { filter: blur(0px) !important; }
+
+        .caption { 
+            position: relative; z-index: 10; color: #D1B3FF; font-size: 2.2rem; 
+            font-weight: bold; text-align: center; text-shadow: 0 0 20px rgba(0,0,0,1);
+        }
     </style>
 </head>
-<body class="text-left">
+<body>
 
-    <div id="music-container"></div>
+    <div id="1d-music"></div>
+    <audio id="reveal-audio" src="abhi-maza-ayagga.mp3"></audio>
 
-    <div id="phase1" class="p-6 text-center animate__animated animate__fadeIn">
-        <h1 class="text-3xl font-bold mb-8 mt-4" style="color: #D1B3FF;">Happy Birthday Rajashree! ❤️</h1>
-        <div class="space-y-8">
-            <div class="polaroid mx-auto max-w-[300px]" style="transform: rotate(-2deg);"><video autoplay muted loop playsinline><source src="1778037251143.mp4" type="video/mp4"></video></div>
-            <div class="polaroid mx-auto max-w-[300px]" style="transform: rotate(3deg);"><video autoplay muted loop playsinline><source src="VID-20260124-WA0003(1).mp4" type="video/mp4"></video></div>
-            <div class="polaroid mx-auto max-w-[300px]" style="transform: rotate(-1deg);"><video autoplay muted loop playsinline><source src="doc_2026-05-06_13-28-43.mp4" type="video/mp4"></video></div>
-        </div>
-        <button onclick="goToPhase2()" class="btn-purple px-10 py-4 rounded-full font-bold shadow-2xl mt-12 mb-10 text-lg">Enter Her Journey →</button>
-    </div>
+    <section id="p1" class="section">
+        <video id="v1" autoplay muted playsinline>
+            <source src="1778037251143.mp4" type="video/mp4">
+        </video>
+        <div class="caption animate__animated animate__fadeInDown">Bevdi, Don, Pillu... ❤️</div>
+    </section>
 
-    <div id="phase2" class="hidden-section animate__animated p-4">
-        <h1 class="text-3xl font-bold text-center mb-10" style="color: #D1B3FF;">Her Journey 🌸</h1>
-        <div class="timeline-wrap">
-            <div class="timeline-line"></div>
+    <section id="p2" class="section">
+        <video id="v2" muted playsinline>
+            <source src="VID-20260124-WA0003(1).mp4" type="video/mp4">
+        </video>
+        <div class="caption">Raining Memories for You 💜</div>
+    </section>
 
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">Roots</span>
-                <div class="polaroid"><img src="aaji"><p class="caption-text">With Aaji ❤️</p></div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">Boss Vibes</span>
-                <div class="polaroid"><img src="don"><p class="caption-text">Don Era 😎</p></div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">New Looks</span>
-                <div class="grid grid-cols-2 gap-2">
-                    <div class="polaroid"><img src="haircut-1"></div>
-                    <div class="polaroid"><img src="haircut-2"></div>
-                </div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">Throwback</span>
-                <div class="polaroid"><img src="crybaby"><p class="caption-text">Professional crybaby 🍼</p></div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">Festival</span>
-                <div class="space-y-4">
-                    <div class="polaroid"><img src="Holi-4"></div>
-                    <div class="polaroid"><img src="Holi grp"></div>
-                    <div class="polaroid"><img src="holi-2-1"></div>
-                </div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">Adventure</span>
-                <div class="polaroid"><img src="trek"><p class="caption-text">Trekking days 🏔️</p></div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">Bold in Red</span>
-                <div class="grid grid-cols-2 gap-2">
-                    <img src="red shirt" class="rounded border">
-                    <img src="red shirt-2" class="rounded border">
-                    <img src="red shirt-3" class="rounded border">
-                    <img src="red shirt-4" class="rounded border">
-                </div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">Elegance</span>
-                <div class="grid grid-cols-2 gap-2">
-                    <div class="polaroid"><img src="kurta-1"></div>
-                    <div class="polaroid"><img src="kurta-2"></div>
-                </div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">Traditions</span>
-                <div class="space-y-4">
-                    <div class="polaroid"><img src="menhdi"></div>
-                    <div class="polaroid"><img src="traditional"></div>
-                    <div class="polaroid"><img src="wedding"></div>
-                </div>
-            </div>
-
-            <div class="timeline-block"><div class="age-marker"></div><span class="year-label">The Legend</span>
-                <div class="polaroid"><img src="bevdi"><p class="caption-text">Best energy ever 😂 🥂</p></div>
-            </div>
-        </div>
-
-        <div class="text-center p-12">
-            <button onclick="goToPhase3()" class="btn-purple px-10 py-4 rounded-full font-bold shadow-2xl">DO NOT CLICK ❌</button>
-        </div>
-    </div>
+    <section id="p3" class="section">
+        <img id="revealImg" src="bevdi" class="reveal-img blur-reveal">
+        <div class="caption" id="finalCap">Wait for it...</div>
+    </section>
 
     <script>
-        function goToPhase2() {
-            const music = document.getElementById('music-container');
-            music.innerHTML = '<iframe width="0" height="0" src="https://www.youtube.com/embed/QJO3ROT-A4E?autoplay=1" frameborder="0" allow="autoplay"></iframe>';
-            document.getElementById('phase1').style.display = 'none';
-            const p2 = document.getElementById('phase2');
-            p2.style.display = 'block';
-            p2.classList.add('animate__fadeInRight');
-            window.scrollTo(0, 0);
+        // Full Photo List from your GitHub
+        const photos = [
+            'crybaby', 'don', 'aaji', 'haircut-1', 'haircut-2', 'holi-2-1', 
+            'kurta-1', 'kurta-2', 'menhdi', 'red shirt', 'red shirt-2', 
+            'traditional', 'trek', 'wedding', 'Holi grp', 'Holi-4'
+        ];
+
+        const v1 = document.getElementById('v1');
+        const v2 = document.getElementById('v2');
+        const revealAudio = document.getElementById('reveal-audio');
+
+        function playOneDirection() {
+            const container = document.getElementById('1d-music');
+            container.innerHTML = '<iframe width="0" height="0" src="https://www.youtube.com/embed/QJO3ROT-A4E?autoplay=1" frameborder="0" allow="autoplay"></iframe>';
         }
 
-        function goToPhase3() {
-            alert("Vine Boom sequence coming next!");
+        // Standard touch-to-start for mobile
+        document.body.addEventListener('touchstart', () => {
+            v1.play();
+            playOneDirection();
+        }, { once: true });
+
+        // Phase 1 -> Phase 2
+        v1.onended = () => {
+            document.getElementById('p2').scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => { v2.play(); }, 500);
+
+            // Start Photo Snow
+            setInterval(() => {
+                const imgName = photos[Math.floor(Math.random() * photos.length)];
+                createFallingPhoto(imgName);
+            }, 900);
+        };
+
+        // Phase 2 -> Phase 3 Reveal
+        v2.onended = () => {
+            document.getElementById('p3').scrollIntoView({ behavior: 'smooth' });
+            
+            // Countdown for the "Abhi Maza Ayagga" reveal
+            setTimeout(() => {
+                // Clear the Blur
+                document.getElementById('revealImg').classList.add('clear-now');
+                document.getElementById('finalCap').innerHTML = "ABHI MAZA AAYEGA! 😈🔥";
+                
+                // Stop 1D and play Abhi Maza Ayagga
+                document.getElementById('1d-music').innerHTML = ""; // Stop One Direction
+                revealAudio.play();
+            }, 3000); // 3 seconds delay for the drop
+        };
+
+        function createFallingPhoto(src) {
+            const container = document.createElement('div');
+            container.className = 'falling-photo polaroid';
+            container.style.left = Math.random() * 80 + 'vw';
+            container.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            // Note: src doesn't have .jpg extension based on your rename list
+            container.innerHTML = `<img src="${src}"><p class="pol-cap">Pillu 💜</p>`;
+            document.body.appendChild(container);
+            setTimeout(() => container.remove(), 7500);
         }
     </script>
 </body>
