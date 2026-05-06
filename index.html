@@ -85,4 +85,91 @@
         setInterval(createHeart, 150);
     </script>
 </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Rajashree ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #080808; color: #ffffff; overflow: hidden; font-family: sans-serif; }
+        
+        /* Heart Snowflakes */
+        .snowflake { position: fixed; top: -10vh; z-index: 0; animation: fall linear infinite; pointer-events: none; }
+        @keyframes fall { to { transform: translateY(110vh); } }
+
+        /* Polaroid Frame */
+        .photo-frame {
+            background: white; padding: 12px 12px 45px 12px; border-radius: 4px;
+            box-shadow: 0 15px 45px rgba(209, 179, 255, 0.4);
+            max-width: 340px; width: 100%; transition: transform 0.4s ease;
+            position: relative; z-index: 10;
+        }
+        .photo-frame video { width: 100%; height: auto; border-radius: 2px; background: #000; }
+        .caption { color: #333; text-align: center; font-style: italic; margin-top: 15px; font-weight: bold; font-size: 1.1rem; }
+        
+        .btn-purple { background: linear-gradient(135deg, #a855f7 0%, #D1B3FF 100%); color: #000; }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-6 text-center">
+
+    <iframe id="youtubePlayer" width="0" height="0" src="https://www.youtube.com/embed/QJO3ROT-A4E?enablejsapi=1" frameborder="0" allow="autoplay"></iframe>
+
+    <div class="z-10 w-full max-w-lg">
+        <h1 class="text-4xl font-bold mb-10 animate__animated animate__fadeInDown" style="color: #D1B3FF;">
+            Happy Birthday Rajashree!
+        </h1>
+
+        <div id="videoContainer" class="hidden photo-frame mx-auto mb-8 animate__animated">
+            <video id="birthdayVideo" muted loop playsinline class="w-full">
+                <source src="1778037251143.mp4" type="video/mp4">
+            </video>
+            <p class="caption">A beautiful moment 💜</p>
+        </div>
+
+        <button onclick="revealSurprise()" id="mainBtn" class="btn-purple px-12 py-5 rounded-full font-bold shadow-xl active:scale-95 transition-all text-xl">
+            Click here for a surprise 🎁
+        </button>
+
+        <div id="finalMessage" class="hidden mt-8 animate__animated animate__fadeIn">
+            <p class="text-2xl font-bold" style="color: #D1B3FF;">Enjoy your special day! ✨</p>
+            <div class="mt-4 text-5xl">🎂 🎉 🎈</div>
+        </div>
+    </div>
+
+    <script>
+        function revealSurprise() {
+            // 1. Play Music
+            const player = document.getElementById('youtubePlayer');
+            player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+
+            // 2. Show the Video
+            const videoCont = document.getElementById('videoContainer');
+            const videoTag = document.getElementById('birthdayVideo');
+            
+            videoCont.classList.remove('hidden');
+            videoCont.classList.add('animate__zoomIn');
+            videoTag.play(); // Start the MP4
+
+            // 3. Show Final Message & Hide Button
+            document.getElementById('finalMessage').classList.remove('hidden');
+            document.getElementById('mainBtn').classList.add('hidden');
+        }
+
+        // Heart Snowflake Logic
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = Math.random() > 0.5 ? '🤍' : '💜';
+            heart.className = 'snowflake';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 150);
+    </script>
+</body>
 </html>
