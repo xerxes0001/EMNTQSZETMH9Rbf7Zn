@@ -9,12 +9,10 @@
     <style>
         body { background-color: #080808; color: #ffffff; overflow-x: hidden; font-family: sans-serif; margin: 0; padding-bottom: 200px; scroll-behavior: smooth; }
         
-        /* THE POLAROID FIX: Large Horizontal size is gone. Centered and Contained. */
         .polaroid {
             background: #ffffff; padding: 10px 10px 40px 10px; border-radius: 2px;
             box-shadow: 0 10px 30px rgba(209, 179, 255, 0.3); width: 90%;
-            max-width: 320px; /* Perfect width for portrait phone screens */
-            margin: 40px auto; display: block;
+            max-width: 310px; margin: 30px auto; display: block;
             position: relative; z-index: 10;
         }
 
@@ -24,38 +22,29 @@
         }
 
         .pol-cap { color: #333; text-align: center; font-family: 'Georgia', serif; font-style: italic; margin-top: 15px; font-size: 0.9rem; font-weight: bold; }
+        .nickname-box { color: #D1B3FF; font-size: 2rem; font-weight: bold; margin: 40px 0 10px 0; }
+        .arrow-connector { color: #444; font-size: 40px; margin: 20px 0; }
 
-        /* Nickname Box: Corrected to Act 1 as requested */
-        .nickname-box { color: #D1B3FF; font-size: 2rem; font-weight: bold; margin-bottom: 10px; margin-top: 50px; }
-
-        /* Timeline Connector Arrow */
-        .arrow-connector { color: #555; font-size: 40px; margin: 30px 0; }
-
-        /* Interactive Falling Snow Style */
+        /* Falling Snow & Hearts */
         .falling-photo {
             position: fixed; top: -25vh; z-index: 100; animation: fallDown linear forwards;
-            width: 120px; padding: 6px 6px 20px 6px; background: #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            cursor: pointer; /* Confirms they are clickable */
+            width: 115px; padding: 5px; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            cursor: pointer;
         }
         @keyframes fallDown { to { transform: translateY(125vh) rotate(360deg); } }
 
-        /* Full Screen Photo Viewer */
+        .heart-snow { position: fixed; font-size: 22px; z-index: 99; animation: floatUp linear infinite; pointer-events: none; }
+        @keyframes floatUp { from { transform: translateY(100vh); opacity: 1; } to { transform: translateY(-10vh); opacity: 0; } }
+
         #photoViewer {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 1000; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.98); z-index: 1000; align-items: center; justify-content: center;
         }
 
-        /* Normal Heart Snow Style */
-        .heart-snow { position: fixed; font-size: 20px; color: rgba(209, 179, 255, 0.8); z-index: 99; animation: float linear infinite; }
-        @keyframes float { from { transform: translateY(100vh); } to { transform: translateY(-10vh); } }
-
-        /* Blur Reveal Phase 3 */
-        .blur-reveal { filter: blur(35px); transition: filter 2.5s ease-in-out; }
+        .blur-reveal { filter: blur(40px); transition: filter 2.5s ease-in-out; }
         .clear-now { filter: blur(0px) !important; }
 
         #audio-storage { position: absolute; width: 0; height: 0; overflow: hidden; }
-        .hidden-section { display: none; }
     </style>
 </head>
 <body class="text-center">
@@ -64,135 +53,117 @@
     <audio id="reveal-audio" src="abhi-maza-ayagga.mp3"></audio>
 
     <div id="act1" class="p-6 animate__animated animate__fadeIn">
-        <h1 class="text-3xl font-bold mb-10 mt-6" style="color: #ffffff;">Our Story ❤️</h1>
-        
+        <h1 class="text-3xl font-bold mt-8" style="color: #ffffff;">For Rajashree ❤️</h1>
         <div class="nickname-box animate__animated animate__fadeInDown">Bevdi, Don, Pillu... ❤️</div>
+
         <div class="polaroid" style="transform: rotate(-2deg);">
-            <video id="v1" controls playsinline>
-                <source src="1778037251143.mp4" type="video/mp4">
-            </video>
+            <video autoplay muted loop playsinline><source src="1778037251143.mp4" type="video/mp4"></video>
             <p class="pol-cap">The Beginning 💜</p>
         </div>
 
         <div class="arrow-connector">↓</div>
 
         <div class="polaroid" style="transform: rotate(3deg);">
-            <video controls playsinline>
-                <source src="VID-20260124-WA0003(1).mp4" type="video/mp4">
-            </video>
+            <video autoplay muted loop playsinline><source src="VID-20260124-WA0003(1).mp4" type="video/mp4"></video>
             <p class="pol-cap">Memories 💜</p>
         </div>
 
         <div class="arrow-connector">↓</div>
 
         <div class="polaroid" style="transform: rotate(-1deg);">
-            <video controls playsinline>
-                <source src="doc_2026-05-06_13-28-43.mp4" type="video/mp4">
-            </video>
+            <video autoplay muted loop playsinline><source src="doc_2026-05-06_13-28-43.mp4" type="video/mp4"></video>
             <p class="pol-cap">Forever 💜</p>
         </div>
 
-        <div class="mt-16 mb-20">
-            <button onclick="startRevealPhase()" id="revealBtn" class="bg-gradient-to-r from-purple-500 to-indigo-400 text-black px-12 py-5 rounded-full font-bold shadow-2xl active:scale-95 text-xl">
-                Tap for the Surprise ☁️ ✨
-            </button>
-        </div>
+        <button onclick="startFinalSurprise()" class="mt-16 mb-20 bg-gradient-to-r from-purple-500 to-indigo-400 text-black px-12 py-5 rounded-full font-bold shadow-2xl active:scale-95 text-xl">
+            Tap for the Surprise ☁️ ✨
+        </button>
     </div>
 
-    <div id="phase2" class="hidden min-h-screen flex flex-col items-center justify-center p-6 bg-neutral-900/50">
+    <div id="phase2" class="hidden min-h-screen flex flex-col items-center justify-center p-6">
         <div class="polaroid blur-reveal" id="bevdiFrame">
-            <img src="bevdi" id="bevdiImg">
+            <img src="bevdi" id="finalImg">
             <p class="pol-cap" id="statusText">Wait for it...</p>
         </div>
     </div>
 
     <div id="photoViewer" onclick="this.style.display='none'">
-        <div class="polaroid" style="max-width: 90vw; width: auto; transform: rotate(0deg);">
-            <img id="bigImg" src="" style="width: auto; height: auto; max-height: 80vh; margin: auto;">
-            <p class="pol-cap">Tap anywhere to close</p>
+        <div class="polaroid" style="max-width: 95vw; width: auto; transform: rotate(0deg);">
+            <img id="bigImg" src="" style="max-height: 80vh;">
+            <p class="pol-cap">Tap to close</p>
         </div>
     </div>
 
     <script>
-        // FULL list from your file list (22 files)
         const allPhotos = ['crybaby', 'don', 'aaji', 'haircut-1', 'haircut-2', 'holi-2-1', 'kurta-1', 'kurta-2', 'menhdi', 'red shirt', 'red shirt-2', 'red shirt-3', 'red shirt-4', 'traditional', 'trek', 'wedding', 'Holi grp', 'Holi-4', 'IMG-20260123-WA0038(3).jpg', 'IMG-20260123-WA0039.jpg', 'IMG-20260123-WA0047.jpg', 'IMG-20260124-WA0007(1).jpg'];
         
         let heartInterval;
         let photoInterval;
 
-        // START EVERYTHING ON FIRST TOUCH (Video 1 + 1D + Normal Hearts)
-        document.getElementById('v1').onplay = () => {
-            // Start 1D Music
+        // One Direction start on first touch
+        document.body.addEventListener('touchstart', () => {
             const container = document.getElementById('audio-storage');
             if(container.innerHTML === "") {
                 container.innerHTML = '<iframe width="0" height="0" src="https://www.youtube.com/embed/QJO3ROT-A4E?autoplay=1" frameborder="0" allow="autoplay"></iframe>';
+                startHeartSnow();
             }
+        }, { once: true });
 
-            // Start Normal Heart Snow
-            startHeartSnow();
-        };
-
-        function startRevealPhase() {
-            // UNLOCK Act 2 Reveal
-            document.getElementById('phase2').classList.remove('hidden');
+        function startFinalSurprise() {
+            document.getElementById('phase2').style.display = 'flex';
             document.getElementById('phase2').scrollIntoView({ behavior: 'smooth' });
 
-            // COuNTDOWN for the Maza Drop (Blur Reveal + Music Change)
+            // 1. Trigger Audio & Blur Reveal (3.5s buildup)
             setTimeout(() => {
-                // Change Music
-                document.getElementById('audio-storage').innerHTML = ""; // Stop 1D
-                document.getElementById('reveal-audio').play(); // Play Maza
-                
-                // Clear Blur and Update Text
+                document.getElementById('audio-storage').innerHTML = ""; 
+                document.getElementById('reveal-audio').play(); 
                 document.getElementById('bevdiFrame').classList.add('clear-now');
-                document.getElementById('statusText').innerHTML = "ABHI MAZA AAYEGA, NA BIDU! 😎🍷";
+                document.getElementById('statusText').innerHTML = "ABHI MAZA AAYEGA! 😎🍷";
 
-                // THE SNOW SWAP: Turn off Hearts, Turn ON Photos
-                stopHeartSnow();
-                startPhotoSnow(); 
+                // 2. WAIT 5 MORE SECONDS before Photo Snow starts
+                setTimeout(() => {
+                    stopHeartSnow();
+                    startPhotoSnow();
+                }, 5000); 
+
             }, 3500); 
         }
 
-        // Functions to control snow types
         function startHeartSnow() {
-            heartInterval = setInterval(() => { createHeartElement(); }, 200);
+            heartInterval = setInterval(() => {
+                const h = document.createElement('div');
+                h.innerHTML = '💜';
+                h.className = 'heart-snow';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 5000);
+            }, 300);
         }
+
         function stopHeartSnow() {
             clearInterval(heartInterval);
-            document.querySelectorAll('.heart-snow').forEach(h => h.remove()); // Quick clear
+            document.querySelectorAll('.heart-snow').forEach(h => h.remove());
         }
+
         function startPhotoSnow() {
             photoInterval = setInterval(() => {
                 const img = allPhotos[Math.floor(Math.random() * allPhotos.length)];
-                dropPhoto(img);
-            }, 750); // Fast tempo for Maza effect
+                createFallingPhoto(img);
+            }, 800);
         }
 
-        // Core falling element creation
-        function createHeartElement() {
-            const h = document.createElement('div');
-            h.innerHTML = '💜';
-            h.className = 'heart-snow';
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            document.body.appendChild(h);
-            setTimeout(() => { h.remove(); }, 5000);
-        }
-
-        function dropPhoto(src) {
+        function createFallingPhoto(src) {
             const el = document.createElement('div');
             el.className = 'falling-photo polaroid';
             el.style.left = Math.random() * 80 + 'vw';
             el.style.animationDuration = (Math.random() * 2 + 4) + 's';
-            el.innerHTML = `<img src="${src}"><p class="pol-cap" style="font-size:0.5rem">Tap to View 💜</p>`;
-            
-            // Add click functionality: Clicked photo opens in Full Viewer
             el.onclick = (e) => {
-                e.stopPropagation(); // Stop background clicks
+                e.stopPropagation();
                 document.getElementById('bigImg').src = src;
                 document.getElementById('photoViewer').style.display = 'flex';
             };
-
+            el.innerHTML = `<img src="${src}"><p class="pol-cap" style="font-size:0.5rem">Pillu 💜</p>`;
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 7000);
         }
