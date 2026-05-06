@@ -7,104 +7,128 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
-        body { background-color: #080808; color: #ffffff; overflow-x: hidden; font-family: sans-serif; margin: 0; }
-        .snowflake { position: fixed; top: -10vh; z-index: 0; animation: fall linear infinite; pointer-events: none; }
-        @keyframes fall { to { transform: translateY(110vh); } }
+        body { background-color: #080808; color: #ffffff; overflow-x: hidden; font-family: sans-serif; margin: 0; padding-bottom: 100px; }
+        
+        /* Proper White Polaroid Style */
         .polaroid {
-            background: white; padding: 12px 12px 45px 12px; border-radius: 4px;
-            box-shadow: 0 15px 45px rgba(209, 179, 255, 0.4);
-            max-width: 320px; width: 100%; margin: 20px auto;
+            background: #ffffff;
+            padding: 10px 10px 40px 10px;
+            border-radius: 2px;
+            box-shadow: 0 10px 30px rgba(209, 179, 255, 0.3);
+            width: 90%;
+            max-width: 300px;
+            margin: 25px auto;
+            display: inline-block;
         }
-        .polaroid video { width: 100%; height: auto; border-radius: 2px; background: #000; display: block; }
-        .caption { color: #333; text-align: center; font-style: italic; margin-top: 15px; font-weight: bold; font-size: 0.9rem; }
-        .btn-purple { background: linear-gradient(135deg, #a855f7 0%, #D1B3FF 100%); color: #000; transition: transform 0.2s; }
-        .hidden-page { display: none; }
+        .polaroid video, .polaroid img { width: 100%; height: auto; display: block; border: 1px solid #eee; }
+        .caption { color: #333; text-align: center; font-family: 'Georgia', serif; font-style: italic; margin-top: 10px; font-size: 0.8rem; font-weight: bold; }
+
+        /* Falling Photo Style */
+        .falling-photo {
+            position: fixed;
+            top: -25vh;
+            width: 140px;
+            z-index: 100;
+            cursor: pointer;
+            animation: fallDown linear forwards;
+            padding: 6px 6px 25px 6px; /* Smaller polaroid for rain */
+        }
+        @keyframes fallDown {
+            to { transform: translateY(125vh) rotate(360deg); }
+        }
+
+        /* Full Screen Photo Viewer */
+        #photoViewer {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 1000; align-items: center; justify-content: center;
+        }
+        
         #music-container { position: absolute; width: 0; height: 0; overflow: hidden; }
+        .btn-purple { background: linear-gradient(135deg, #a855f7 0%, #D1B3FF 100%); color: #000; }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen p-6 text-center">
+<body class="text-center">
 
     <div id="music-container"></div>
 
-    <div id="page0" class="page-container animate__animated animate__fadeIn">
-        <h1 class="text-3xl font-bold mb-6" style="color: #D1B3FF;">Happy Birthday Rajashree!</h1>
-        <div class="polaroid">
-            <video id="vid0" autoplay muted loop playsinline>
-                <source src="1778037251143.mp4" type="video/mp4">
-            </video>
-            <p class="caption">A special day for a special soul 💜</p>
+    <div id="mainContent" class="p-6 animate__animated animate__fadeIn">
+        <h1 class="text-3xl font-bold mb-8 mt-4" style="color: #D1B3FF;">Our Story ❤️</h1>
+
+        <div class="polaroid" style="transform: rotate(-2deg);">
+            <video autoplay muted loop playsinline><source src="1778037251143.mp4" type="video/mp4"></video>
+            <p class="caption">The Beginning 💜</p>
         </div>
-        <button onclick="startJourney()" class="btn-purple px-10 py-4 rounded-full font-bold shadow-xl active:scale-95 mt-6">
-            Click here for a surprise 🎁
-        </button>
+
+        <div class="polaroid" style="transform: rotate(3deg);">
+            <video autoplay muted loop playsinline><source src="VID-20260124-WA0003(1).mp4" type="video/mp4"></video>
+            <p class="caption">Moments with You 💜</p>
+        </div>
+
+        <div class="polaroid" style="transform: rotate(-1deg);">
+            <video autoplay muted loop playsinline><source src="doc_2026-05-06_13-28-43.mp4" type="video/mp4"></video>
+            <p class="caption">Forever to go 💜</p>
+        </div>
+
+        <div class="mt-10">
+            <button onclick="startRain()" class="btn-purple px-10 py-4 rounded-full font-bold shadow-2xl active:scale-95 text-lg">
+                Tap for the Surprise ☁️ ✨
+            </button>
+        </div>
     </div>
 
-    <div id="page1" class="hidden-page page-container animate__animated">
-        <h2 class="text-2xl font-bold mb-4 text-purple-300">Moments to Cherish...</h2>
-        <div class="polaroid">
-            <video id="vid1" loop playsinline muted>
-                <source src="VID-20260124-WA0003(1).mp4" type="video/mp4">
-            </video>
-            <p class="caption">Forever grateful for you ❤️</p>
+    <div id="photoViewer" onclick="this.style.display='none'">
+        <div class="polaroid" style="max-width: 85vw; transform: rotate(0deg);">
+            <img id="viewImg" src="">
+            <p class="caption">Tap anywhere to close</p>
         </div>
-        <button onclick="showPage(2)" class="text-purple-300 font-bold mt-4 underline">Next Memory →</button>
-    </div>
-
-    <div id="page2" class="hidden-page page-container animate__animated">
-        <h2 class="text-2xl font-bold mb-4 text-purple-300">Always Smiling ✨</h2>
-        <div class="polaroid">
-            <video id="vid2" loop playsinline muted>
-                <source src="doc_2026-05-06_13-28-43.mp4" type="video/mp4">
-            </video>
-            <p class="caption">To many more years of this 💜</p>
-        </div>
-        <p class="text-purple-200 italic mt-4">Happy Birthday, Rajashree!</p>
-        <div class="text-5xl mt-6">🎂 🎉 🎈</div>
     </div>
 
     <script>
-        // Start Journey: Handles Music and Page Swap
-        function startJourney() {
-            // 1. Inject YouTube Music (Plays "What Makes You Beautiful")
+        // All your uploaded photo filenames
+        const photos = [
+            'IMG-20260123-WA0037.jpg', 'IMG-20260123-WA0038(3).jpg', 
+            'IMG-20260123-WA0039.jpg', 'IMG-20260123-WA0047.jpg', 
+            'IMG-20260124-WA0007(1).jpg', 'IMG-20260129-WA0025(1).jpg', 
+            'IMG-20260129-WA0026(2).jpg', 'IMG-20260129-WA0027(2).jpg', 
+            'IMG_20260428_170955_132.jpg', 'IMG_20260430_161502_913.jpg', 
+            'IMG_20260430_161503_365.jpg', 'IMG_20260430_161503_491.jpg',
+            'photo.jpg'
+        ];
+
+        function startRain() {
+            // Start Music
             const music = document.getElementById('music-container');
             music.innerHTML = '<iframe width="0" height="0" src="https://www.youtube.com/embed/QJO3ROT-A4E?autoplay=1" frameborder="0" allow="autoplay"></iframe>';
+
+            // Start creating falling photos every 700ms
+            setInterval(() => {
+                const randomImg = photos[Math.floor(Math.random() * photos.length)];
+                createFallingPhoto(randomImg);
+            }, 700);
             
-            // 2. Go to Page 1
-            showPage(1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function showPage(num) {
-            // Hide all pages
-            document.querySelectorAll('.page-container').forEach(p => p.style.display = 'none');
+        function createFallingPhoto(src) {
+            const container = document.createElement('div');
+            container.className = 'falling-photo polaroid';
             
-            // Show the selected page
-            const nextPage = document.getElementById('page' + num);
-            nextPage.style.display = 'block';
-            nextPage.classList.add('animate__fadeInRight');
+            // Random horizontal position and speed
+            container.style.left = Math.random() * 85 + 'vw';
+            container.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            
+            container.onclick = (e) => {
+                e.stopPropagation();
+                document.getElementById('viewImg').src = src;
+                document.getElementById('photoViewer').style.display = 'flex';
+            };
 
-            // Play the corresponding video
-            if(num === 1) {
-                const v1 = document.getElementById('vid1');
-                v1.play().catch(e => console.log("Auto-play blocked"));
-            }
-            if(num === 2) {
-                const v2 = document.getElementById('vid2');
-                v2.play().catch(e => console.log("Auto-play blocked"));
-            }
-        }
+            container.innerHTML = `<img src="${src}"><p class="caption">View 💜</p>`;
+            document.body.appendChild(container);
 
-        // Floating Hearts/Snowflakes effect
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.innerHTML = Math.random() > 0.5 ? '🤍' : '💜';
-            heart.className = 'snowflake';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
-            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            // Cleanup
+            setTimeout(() => container.remove(), 8000);
         }
-        setInterval(createHeart, 300);
     </script>
 </body>
 </html>
