@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
-        body { background-color: #080808; color: #ffffff; overflow-x: hidden; font-family: sans-serif; margin: 0; padding-bottom: 200px; scroll-behavior: smooth; }
+        body { background-color: #080808; color: #ffffff; overflow-x: hidden; font-family: sans-serif; margin: 0; padding-bottom: 250px; scroll-behavior: smooth; }
         
         /* 1. Centered Horizontal Video Strip */
         .video-strip {
@@ -60,6 +60,8 @@
         }
 
         #audio-storage { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+        .final-message { color: #D1B3FF; font-family: 'Georgia', serif; font-style: italic; font-size: 1.8rem; margin-top: 100px; padding: 40px; }
     </style>
 </head>
 <body class="text-center">
@@ -134,6 +136,10 @@
             <img src="bevdi">
             <p class="pol-cap" id="statusText">Wait for it...</p>
         </div>
+
+        <div id="finalMessage" class="hidden-section opacity-0 transition-opacity duration-1000 final-message">
+            "I love you BonBon"
+        </div>
     </div>
 
     <div id="photoViewer" onclick="this.style.display='none'">
@@ -141,7 +147,6 @@
     </div>
 
     <script>
-        // Full 22+ Photo List for the Raining Snowfall
         const allPhotos = [
             'crybaby', 'don', 'aaji', 'haircut-1', 'haircut-2', 'holi-2-1', 
             'kurta-1', 'kurta-2', 'menhdi', 'red shirt', 'red shirt-2', 
@@ -174,6 +179,11 @@
                 document.getElementById('reveal-audio').play(); 
                 document.getElementById('bevdiFrame').classList.add('clear-now');
                 document.getElementById('statusText').innerHTML = "ABHI MAZA AAYEGA, NA BIDU! 😎🍷";
+
+                // Show the final message after reveal
+                const msg = document.getElementById('finalMessage');
+                msg.classList.remove('hidden-section');
+                setTimeout(() => { msg.style.opacity = "1"; }, 500);
 
                 // WAIT 5 SECONDS after reveal starts, then swap hearts for photos
                 setTimeout(() => { 
