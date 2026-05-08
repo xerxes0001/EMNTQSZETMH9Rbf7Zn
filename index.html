@@ -1,261 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>For Rajashree ❤️</title>
+<title>For Rajashree ❤️</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-        rel="stylesheet"
-    >
+<style>
 
-    <style>
+html,
+body{
+    margin:0;
+    padding:0;
+    overflow-x:hidden;
+    background:#080808;
+    color:white;
+    font-family:sans-serif;
+    scroll-behavior:smooth;
+    -webkit-tap-highlight-color:transparent;
+}
 
-        html,
-        body{
-            margin:0;
-            padding:0;
-            overflow-x:hidden;
-            background:#080808;
-            color:white;
-            font-family:sans-serif;
-            max-width:100%;
-            -webkit-tap-highlight-color:transparent;
-        }
+/* LOCK SCREEN */
 
-        body{
-            position:relative;
-        }
+#lockOverlay{
+    position:fixed;
+    inset:0;
+    background:#080808;
+    z-index:9999;
 
-        /* LOCK SCREEN */
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
 
-        #lockOverlay{
-            position:fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
+/* HEARTS */
 
-            background:#080808;
+.falling-heart{
+    position:fixed;
+    top:-5vh;
 
-            z-index:9000;
+    color:#D1B3FF;
 
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            text-align:center;
-        }
+    font-size:28px;
 
-        /* FALLING HEARTS */
+    pointer-events:none;
 
-        .falling-heart{
-            position:fixed;
-            top:-5vh;
+    animation:fallHeart linear forwards;
+}
 
-            color:#D1B3FF !important;
+@keyframes fallHeart{
+    to{
+        transform:
+        translateY(115vh)
+        rotate(360deg);
+    }
+}
 
-            text-shadow:
-            0 0 10px rgba(209,179,255,0.9),
-            0 0 20px rgba(209,179,255,0.4);
+/* TIMER */
 
-            font-size:28px;
+#timer{
+    margin-top:25px;
+    font-size:1.7rem;
+    color:#ff4d4d;
+    font-family:monospace;
+}
 
-            z-index:8500;
+/* START */
 
-            animation:fallHeart linear forwards;
+#startOverlay{
+    display:none;
 
-            pointer-events:none;
-        }
+    min-height:100vh;
 
-        @keyframes fallHeart{
-            to{
-                transform:
-                translateY(115vh)
-                rotate(360deg);
-            }
-        }
+    background:
+    radial-gradient(circle,#e2c08d 0%,#c19a6b 100%);
 
-        /* START SCREEN */
+    padding:80px 20px 140px;
 
-        #startOverlay{
-            display:none;
+    overflow-y:auto;
 
-            width:100%;
-            min-height:100vh;
+    flex-direction:column;
+    align-items:center;
 
-            background:
-            radial-gradient(circle,#e2c08d 0%,#c19a6b 100%);
+    text-align:center;
+}
 
-            z-index:5500;
+#typewriterText{
+    max-width:700px;
 
-            flex-direction:column;
-            align-items:center;
+    color:#3d2b1f;
 
-            padding:80px 20px 150px 20px;
+    font-family:Georgia,serif;
+    font-style:italic;
 
-            box-shadow:
-            inset 0 0 100px rgba(0,0,0,0.5);
+    line-height:1.9;
+    font-size:1.2rem;
+}
 
-            overflow-y:auto;
+.word{
+    opacity:0;
+    transition:0.4s;
+    margin-right:5px;
+}
 
-            scroll-behavior:smooth;
-        }
+.word.visible{
+    opacity:1;
+}
 
-        #typewriterText{
-            font-family:'Georgia',serif;
-            font-style:italic;
-            font-size:1.25rem;
-            line-height:1.8;
-            color:#3d2b1f;
-            text-align:center;
-            max-width:600px;
-        }
+/* MAIN */
 
-        .word{
-            opacity:0;
-            display:inline-block;
-            margin-right:5px;
-            transition:opacity 0.4s ease;
-        }
+#mainContent{
+    display:none;
+}
 
-        .word.visible{
-            opacity:1;
-        }
+.polaroid{
+    width:290px;
 
-        /* POLAROIDS */
+    background:white;
+    color:black;
 
-        .polaroid{
-            background:#ffffff;
+    padding:10px 10px 30px;
 
-            padding:10px 10px 35px 10px;
+    margin:30px auto;
 
-            border-radius:2px;
+    border-radius:4px;
 
-            box-shadow:
-            0 10px 30px rgba(209,179,255,0.4);
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.8);
+}
 
-            width:280px;
+.polaroid img,
+.polaroid video{
+    width:100%;
+    display:block;
+    border-radius:6px;
+}
 
-            margin:30px auto;
+.pol-cap{
+    text-align:center;
+    margin-top:10px;
+    font-style:italic;
+    font-weight:bold;
+}
 
-            color:#333;
-        }
+.nickname-label{
+    text-align:center;
+    margin-top:70px;
 
-        .polaroid img,
-        .polaroid video{
-            width:100%;
-            height:auto;
-            display:block;
-            background:#000;
-            border-radius:6px;
-            object-fit:cover;
-        }
+    color:#D1B3FF;
 
-        .pol-cap{
-            text-align:center;
-            font-style:italic;
-            font-weight:bold;
-            margin-top:10px;
-            font-size:0.95rem;
-        }
+    font-size:2rem;
+    font-weight:bold;
+}
 
-        .nickname-label{
-            color:#D1B3FF;
-            font-size:2.2rem;
-            font-weight:bold;
-            margin-top:60px;
-            text-align:center;
-        }
+.arrow-connector{
+    text-align:center;
+    font-size:45px;
+    margin:20px 0;
+}
 
-        .arrow-connector{
-            color:#444;
-            font-size:45px;
-            margin:20px 0;
-            text-align:center;
-        }
+/* PHOTO SNOW */
 
-        /* FALLING PHOTO */
+.falling-photo{
+    position:fixed;
+    top:-30vh;
 
-        .falling-photo{
-            position:fixed;
-            top:-30vh;
+    width:155px;
 
-            z-index:8000;
+    background:white;
 
-            width:155px;
+    padding:8px;
 
-            padding:8px;
+    z-index:9000;
 
-            background:#fff;
+    animation:fallPhoto linear forwards;
 
-            box-shadow:
-            0 15px 35px rgba(0,0,0,0.8);
+    will-change:transform;
+}
 
-            animation:fallPhoto linear forwards;
+@keyframes fallPhoto{
+    to{
+        transform:
+        translateY(130vh)
+        rotate(360deg);
+    }
+}
 
-            touch-action:none;
+/* VIEWER */
 
-            will-change:transform;
-        }
+#photoViewer{
+    display:none;
 
-        @keyframes fallPhoto{
-            to{
-                transform:
-                translateY(130vh)
-                rotate(360deg);
-            }
-        }
+    position:fixed;
+    inset:0;
 
-        /* FINAL */
+    background:rgba(0,0,0,0.95);
 
-        #photoViewer{
-            display:none;
+    z-index:12000;
 
-            position:fixed;
-            top:0;
-            left:0;
+    justify-content:center;
+    align-items:center;
+}
 
-            width:100%;
-            height:100%;
+#bigImg{
+    max-width:95vw;
+    max-height:95vh;
+    border-radius:12px;
+}
 
-            background:rgba(0,0,0,0.98);
+/* BLUR */
 
-            z-index:11000;
+.blur-reveal{
+    filter:blur(45px);
+    transition:3s;
+}
 
-            align-items:center;
-            justify-content:center;
-        }
+.clear-now{
+    filter:blur(0px)!important;
+}
 
-        #bigImg{
-            max-width:95vw;
-            max-height:95vh;
-            border-radius:12px;
-        }
+/* FINAL WISH */
 
-        .blur-reveal{
-            filter:blur(45px);
-            transition:filter 3s ease-in-out;
-        }
+#finalWishScreen{
+    display:none;
 
-        .clear-now{
-            filter:blur(0px)!important;
-        }
+    position:fixed;
+    inset:0;
 
-        /* TIMER */
+    background:rgba(0,0,0,0.92);
 
-        #timer{
-            margin-top:20px;
-            font-size:1.8rem;
-            color:#ff4d4d;
-            font-family:monospace;
-        }
+    z-index:13000;
 
-    </style>
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    padding:20px;
+}
+
+#finalWishText{
+    color:#D1B3FF;
+
+    font-size:2rem;
+
+    font-family:Georgia,serif;
+
+    line-height:1.8;
+}
+
+/* FEEDBACK */
+
+#feedbackScreen{
+    display:none;
+
+    min-height:100vh;
+
+    background:#080808;
+
+    padding:40px 20px;
+
+    text-align:center;
+}
+
+#recordBtn{
+    width:90px;
+    height:90px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#a855f7;
+
+    color:white;
+
+    font-size:2rem;
+
+    cursor:pointer;
+}
+
+</style>
 </head>
 
 <body onload="startLockHearts()">
@@ -264,43 +292,31 @@
 
 <div id="lockOverlay">
 
-    <h2
-        class="text-2xl mb-8 text-purple-300 font-bold"
-        style="position:relative;z-index:10000"
-    >
+    <h2 class="text-3xl mb-8 text-purple-300 font-bold">
         Enter the Secret Code 🔐
     </h2>
 
     <input
-        type="password"
         id="passInput"
-
-        class="bg-zinc-900 border-2 border-purple-400
-        p-4 rounded-xl mb-6 text-center text-xl
-        w-64 outline-none text-white"
-
+        type="password"
         placeholder="Password"
 
-        style="position:relative;z-index:10000"
+        class="bg-zinc-900 border-2 border-purple-400
+        p-4 rounded-xl text-center text-xl
+        w-72 outline-none text-white"
     >
 
     <button
         onclick="checkPass()"
 
-        class="bg-purple-600 text-white
-        px-14 py-4 rounded-full font-bold
-        active:scale-95 shadow-lg"
-
-        style="position:relative;z-index:10000"
+        class="bg-purple-600
+        px-12 py-4 rounded-full
+        mt-6 font-bold"
     >
         Unlock Surprise
     </button>
 
-    <div
-        id="timer"
-
-        style="position:relative;z-index:10000"
-    ></div>
+    <div id="timer"></div>
 
 </div>
 
@@ -308,8 +324,8 @@
 
 <div id="startOverlay">
 
-    <h1 class="text-3xl font-bold mb-4 text-stone-800">
-        Happy Birthday Rajashree 🎂 ⏳
+    <h1 class="text-4xl font-bold mb-8 text-stone-800">
+        Happy Birthday Rajashree 🎂
     </h1>
 
     <div id="typewriterText"></div>
@@ -319,11 +335,9 @@
 
         onclick="startMainSite()"
 
-        class="bg-stone-800 text-amber-50
-        px-12 py-5 rounded-full shadow-2xl
-        font-bold mt-12 mb-20"
-
-        style="display:none;"
+        class="hidden bg-black text-white
+        px-12 py-5 rounded-full
+        mt-12 font-bold"
     >
         Open My Gift 🎁
     </button>
@@ -336,545 +350,714 @@
     <source src="music.mp3" type="audio/mp3">
 </audio>
 
-<audio id="reveal-audio">
-    <source src="reveal.mp3" type="audio/mp3">
+<audio id="revealAudio">
+    <source src="abhi-maza-aayega.mp3" type="audio/mp3">
 </audio>
 
 <!-- MAIN -->
 
-<div id="mainContent" class="hidden">
+<div id="mainContent">
 
-    <div class="p-6 text-center">
+<div class="p-6 text-center">
 
-        <h1 class="text-4xl font-bold mb-12 text-purple-300">
-            Our Story ❤️
-        </h1>
+<h1 class="text-5xl font-bold mb-14 text-purple-300">
+Our Story ❤️
+</h1>
 
-        <!-- VIDEOS -->
+<!-- VIDEOS -->
 
-        <div class="polaroid">
-            <video
-                id="v1"
-                loop
-                muted
-                playsinline
-                preload="metadata"
-            >
-                <source src="video1.mp4" type="video/mp4">
-            </video>
+<div class="polaroid">
+<video id="v1" loop muted autoplay playsinline>
+<source src="video1.mp4" type="video/mp4">
+</video>
+<p class="pol-cap">Gorgeous ❤️</p>
+</div>
 
-            <p class="pol-cap">Gorgeous ❤️</p>
-        </div>
+<div class="polaroid">
+<video id="v2" loop muted autoplay playsinline>
+<source src="video2.mp4" type="video/mp4">
+</video>
+<p class="pol-cap">Don 😎</p>
+</div>
 
-        <div class="polaroid">
-            <video
-                id="v2"
-                loop
-                muted
-                playsinline
-                preload="metadata"
-            >
-                <source src="video2.mp4" type="video/mp4">
-            </video>
+<div class="polaroid">
+<video id="v3" loop muted autoplay playsinline>
+<source src="video3.mp4" type="video/mp4">
+</video>
+<p class="pol-cap">Pillu 🍼</p>
+</div>
 
-            <p class="pol-cap">Don 😎</p>
-        </div>
+<!-- TIMELINE -->
 
-        <div class="polaroid">
-            <video
-                id="v3"
-                loop
-                muted
-                playsinline
-                preload="metadata"
-            >
-                <source src="video3.mp4" type="video/mp4">
-            </video>
+<button
+onclick="unlockTimeline()"
 
-            <p class="pol-cap">Pillu 🍼</p>
-        </div>
+class="bg-purple-600 text-white
+px-14 py-5 rounded-full mt-16
+font-bold shadow-xl"
+>
+Open Timeline ↓
+</button>
 
-        <!-- TIMELINE BUTTON -->
+<div id="timelineSection" class="hidden">
 
-        <button
-            onclick="unlockTimeline()"
+<div class="nickname-label">
+Pillu 🍼
+</div>
 
-            class="bg-purple-600 text-white
-            px-14 py-5 rounded-full mt-16
-            font-bold shadow-xl"
-        >
-            Open the Timeline ↓
-        </button>
+<div class="polaroid" onclick="viewPhoto('crybaby.jpg')">
+<img src="crybaby.jpg">
+<p class="pol-cap">Where it started ❤️</p>
+</div>
 
-        <!-- TIMELINE -->
+<div class="polaroid" onclick="viewPhoto('don.jpg')">
+<img src="don.jpg">
+</div>
 
-        <div id="timelineSection" class="hidden">
+<div class="arrow-connector">↓</div>
 
-            <div class="nickname-label">
-                Mehndi 🌸
-            </div>
+<div class="nickname-label">
+With Aaji ❤️
+</div>
 
-            <div
-                class="polaroid"
-                onclick="viewPhoto('mehndi.jpg')"
-            >
-                <img src="mehndi.jpg">
+<div class="polaroid" onclick="viewPhoto('aaji.jpg')">
+<img src="aaji.jpg">
+</div>
 
-                <p class="pol-cap">
-                    Beautiful ❤️
-                </p>
-            </div>
+<div class="arrow-connector">↓</div>
 
-            <div class="arrow-connector">↓</div>
+<div class="nickname-label">
+Haircut Era ✂️
+</div>
 
-            <div class="nickname-label">
-                Wedding ✨
-            </div>
+<div class="polaroid" onclick="viewPhoto('haircut-1.jpg')">
+<img src="haircut-1.jpg">
+</div>
 
-            <div
-                class="polaroid"
-                onclick="viewPhoto('wedding.jpg')"
-            >
-                <img src="wedding.jpg">
-            </div>
+<div class="polaroid" onclick="viewPhoto('haircut-2.jpg')">
+<img src="haircut-2.jpg">
+</div>
 
-            <div class="arrow-connector">↓</div>
+<div class="arrow-connector">↓</div>
 
-            <div class="nickname-label">
-                Holi 🌈
-            </div>
+<div class="nickname-label">
+Traditional 🌸
+</div>
 
-            <div
-                class="polaroid"
-                onclick="viewPhoto('holi.jpg')"
-            >
-                <img src="holi.jpg">
-            </div>
+<div class="polaroid" onclick="viewPhoto('traditional.jpg')">
+<img src="traditional.jpg">
+</div>
 
-            <div class="arrow-connector">↓</div>
+<div class="polaroid" onclick="viewPhoto('mehndi.jpg')">
+<img src="mehndi.jpg">
+</div>
 
-            <div class="nickname-label">
-                Red Shirt Era ❤️
-            </div>
+<div class="arrow-connector">↓</div>
 
-            <div
-                class="polaroid"
-                onclick="viewPhoto('red-shirt.jpg')"
-            >
-                <img src="red-shirt.jpg">
-            </div>
+<div class="nickname-label">
+Holi & Trek 🌈
+</div>
 
-            <div
-                class="polaroid"
-                onclick="viewPhoto('red-shirt-2.jpg')"
-            >
-                <img src="red-shirt-2.jpg">
-            </div>
+<div class="polaroid" onclick="viewPhoto('holi-2-1.jpg')">
+<img src="holi-2-1.jpg">
+</div>
 
-            <div class="arrow-connector">↓</div>
+<div class="polaroid" onclick="viewPhoto('trek.jpg')">
+<img src="trek.jpg">
+</div>
 
-            <div class="nickname-label">
-                Favorite Moments ✨
-            </div>
+<div class="arrow-connector">↓</div>
 
-            <div
-                class="polaroid"
-                onclick="viewPhoto('photo.jpg')"
-            >
-                <img src="photo.jpg">
-            </div>
+<div class="nickname-label">
+Red Shirt Era ❤️
+</div>
 
-            <!-- FINAL BUTTON -->
+<div class="polaroid" onclick="viewPhoto('red-shirt.jpg')">
+<img src="red-shirt.jpg">
+</div>
 
-            <button
-                onclick="startFinalSurprise()"
+<div class="polaroid" onclick="viewPhoto('red-shirt-2.jpg')">
+<img src="red-shirt-2.jpg">
+</div>
 
-                class="mt-28 mb-44
-                bg-gradient-to-r
-                from-purple-500 to-indigo-400
-                text-black px-16 py-7
-                rounded-full font-bold shadow-2xl"
-            >
-                Final Surprise ✨
-            </button>
+<div class="polaroid" onclick="viewPhoto('red-shirt-3.jpg')">
+<img src="red-shirt-3.jpg">
+</div>
 
-        </div>
+<div class="polaroid" onclick="viewPhoto('red-shirt-4.jpg')">
+<img src="red-shirt-4.jpg">
+</div>
 
-    </div>
+<div class="arrow-connector">↓</div>
 
-    <!-- FINAL -->
+<div class="nickname-label">
+Wedding ✨
+</div>
 
-    <div
-        id="act3"
-        class="hidden min-h-screen
-        flex items-center justify-center"
-    >
+<div class="polaroid" onclick="viewPhoto('wedding.jpg')">
+<img src="wedding.jpg">
+</div>
 
-        <div
-            class="polaroid blur-reveal"
-            id="bevdiFrame"
+<div class="arrow-connector">↓</div>
 
-            style="width:320px;"
-        >
-            <img src="photo.jpg">
+<div class="nickname-label">
+Forever ❤️
+</div>
 
-            <p class="pol-cap">
-                Wait for it...
-            </p>
-        </div>
+<div class="polaroid" onclick="viewPhoto('photo.jpg')">
+<img src="photo.jpg">
+</div>
 
-    </div>
+<button
+onclick="startFinalSurprise()"
 
+class="mt-24 mb-40
+bg-gradient-to-r
+from-purple-500 to-pink-400
+text-black px-16 py-7
+rounded-full font-bold"
+>
+Final Surprise ✨
+</button>
+
+</div>
+</div>
+
+<!-- BLUR REVEAL -->
+
+<div
+id="act3"
+
+class="hidden
+min-h-screen
+flex items-center justify-center"
+>
+
+<div
+id="bevdiFrame"
+
+class="polaroid blur-reveal"
+
+style="width:320px;"
+>
+<img src="bevdi.jpg">
+
+<p class="pol-cap">
+Wait for it...
+</p>
+
+</div>
 </div>
 
 <!-- VIEWER -->
 
-<div
-    id="photoViewer"
-    onclick="closeViewer()"
+<div id="photoViewer">
+<img id="bigImg">
+</div>
+
+<!-- FINAL WISH -->
+
+<div id="finalWishScreen">
+
+<div id="finalWishText"></div>
+
+</div>
+
+<!-- FEEDBACK -->
+
+<div id="feedbackScreen">
+
+<h2
+style="
+font-size:2rem;
+color:#D1B3FF;
+margin-bottom:30px;
+"
 >
-    <img id="bigImg" src="">
+Any Suggestions For Me? ❤️
+</h2>
+
+<button id="recordBtn">
+🎙️
+</button>
+
+<p
+id="recordStatus"
+
+style="
+margin-top:20px;
+font-size:1.1rem;
+"
+>
+Tap To Record
+</p>
+
+<audio
+id="voicePlayback"
+controls
+
+style="
+margin-top:30px;
+display:none;
+"
+></audio>
+
 </div>
 
 <script>
 
-    /* LETTER */
+/* LETTER */
 
-    const message =
-    "I first saw you during our 10th grade, and since then, I have had a crush on you. We had our verbal abuse competitions several times, and the second time, you were the clear winner. I was quite dumb, even when you tried to contact me through Telegram. I should have understood the obvious signs and the subtle hints you dropped—like keeping good profile pictures, which I did save, just in case I ever found the courage to propose. But I never did. You know, destiny works in beautiful ways. You were the one who proposed to me; you were the one who caught the hint I dropped: 'You are blunt... Tu tondavar bolte sagla.' Then you practiced for a month just to propose to me on the very first day of the year—01/01/2026. This was the best New Year present for me—starting the year with the very person I love. I know I messed up quite a lot, but you understood my dumb behavior and forgave me so many times. I have hurt you, but it was never intentional, and it never will be. All I ever want is for you to be happy. Happy Birthday, BonBon / Pillu (Rajashree). I love you so much, my darling.";
+const message =
+"I first saw you during our 10th grade, and since then, I have had a crush on you. We had our verbal abuse competitions several times, and the second time, you were the clear winner. I was quite dumb, even when you tried to contact me through Telegram. I should have understood the obvious signs and the subtle hints you dropped. But destiny works in beautiful ways. You were the one who proposed to me. Starting the year with the very person I love was the best gift ever. Happy Birthday BonBon ❤️ I love you so much.";
 
-    /* SNOW PHOTOS */
+/* SNOW PHOTOS */
 
-    const snowfallPhotos = [
+const snowfallPhotos = [
 
-        'mehndi.jpg',
-        'wedding.jpg',
-        'holi.jpg',
-        'red-shirt.jpg',
-        'red-shirt-2.jpg',
-        'traditional.jpg',
-        'kurta-1.jpg',
-        'kurta-2.jpg',
-        'photo.jpg'
+'crybaby.jpg',
+'don.jpg',
+'aaji.jpg',
+'haircut-1.jpg',
+'haircut-2.jpg',
+'traditional.jpg',
+'mehndi.jpg',
+'holi-2-1.jpg',
+'trek.jpg',
+'red-shirt.jpg',
+'red-shirt-2.jpg',
+'red-shirt-3.jpg',
+'red-shirt-4.jpg',
+'wedding.jpg',
+'photo.jpg'
 
-    ];
+];
 
-    /* TIMER */
+/* TIMER */
 
-    const targetDate =
-    new Date("May 9, 2026 00:00:00").getTime();
+const targetDate =
+new Date("May 9, 2026 00:00:00").getTime();
 
-    /* HEARTS */
+/* HEARTS */
 
-    function startLockHearts(){
+function startLockHearts(){
 
-        setInterval(() => {
+setInterval(()=>{
 
-            const h =
-            document.createElement('div');
+const heart =
+document.createElement('div');
 
-            h.innerText = '❤️';
+heart.className =
+'falling-heart';
 
-            h.className = 'falling-heart';
+heart.innerHTML =
+'❤️';
 
-            h.style.left =
-            Math.floor(Math.random() * 95) + 'vw';
+heart.style.left =
+Math.random() * 95 + 'vw';
 
-            h.style.animationDuration =
-            (Math.random() * 3 + 3) + 's';
+heart.style.animationDuration =
+(Math.random() * 3 + 3) + 's';
 
-            document.body.appendChild(h);
+document.body.appendChild(heart);
 
-            setTimeout(() => {
+setTimeout(()=>{
 
-                if(h.parentNode){
+heart.remove();
 
-                    h.remove();
-                }
+},6000);
 
-            }, 6000);
+},350);
+}
 
-        }, 350);
-    }
+/* PASSWORD */
 
-    /* PASSWORD */
+function checkPass(){
 
-    function checkPass(){
+const pass =
+document.getElementById('passInput')
+.value
+.trim();
 
-        const enteredPass =
-        document.getElementById('passInput')
-        .value
-        .trim();
+if(pass === "BonBon"){
 
-        /* PASSWORD */
+document.getElementById('lockOverlay')
+.style.display = 'none';
 
-        if(enteredPass === "BonBon"){
+document.getElementById('startOverlay')
+.style.display = 'flex';
 
-            document.getElementById('lockOverlay')
-            .style.display = 'none';
+const music =
+document.getElementById('bgMusic');
 
-            document.getElementById('startOverlay')
-            .style.display = 'flex';
+music.volume = 0.6;
 
-            const music =
-            document.getElementById('bgMusic');
+music.play().catch(()=>{});
 
-            if(music){
+typeWriter(message);
 
-                music.volume = 0.7;
+}else{
 
-                music.play().catch(() => {});
-            }
+alert("Wrong Password ❤️");
+}
+}
 
-            typeWriter(message, 'typewriterText', 180);
+/* TYPEWRITER */
 
-        }else{
+function typeWriter(text){
 
-            alert("Wrong Password ❤️");
-        }
-    }
+const container =
+document.getElementById('typewriterText');
 
-    /* TYPEWRITER */
+const words =
+text.split(" ");
 
-    function typeWriter(text, targetId, speed){
+words.forEach((word,index)=>{
 
-        const container =
-        document.getElementById(targetId);
+const span =
+document.createElement('span');
 
-        const overlay =
-        document.getElementById('startOverlay');
+span.className =
+'word';
 
-        const words = text.split(" ");
+span.innerText =
+word + " ";
 
-        words.forEach((word, i) => {
+container.appendChild(span);
 
-            const span =
-            document.createElement('span');
+setTimeout(()=>{
 
-            span.innerText = word;
+span.classList.add('visible');
 
-            span.className = 'word';
+if(index === words.length - 1){
 
-            container.appendChild(span);
+document.getElementById('giftBtn')
+.classList.remove('hidden');
+}
 
-            setTimeout(() => {
+},index * 170);
 
-                span.classList.add('visible');
+});
+}
 
-                overlay.scrollTop =
-                overlay.scrollHeight;
+/* MAIN */
 
-                if(i === words.length - 1){
+function startMainSite(){
 
-                    document.getElementById('giftBtn')
-                    .style.display = 'block';
-                }
+document.getElementById('startOverlay')
+.style.display = 'none';
 
-            }, i * speed);
-        });
-    }
+document.getElementById('mainContent')
+.style.display = 'block';
 
-    /* MAIN */
+['v1','v2','v3'].forEach(id=>{
 
-    function startMainSite(){
+const vid =
+document.getElementById(id);
 
-        document.getElementById('startOverlay')
-        .style.display = 'none';
+if(vid){
 
-        document.getElementById('mainContent')
-        .classList.remove('hidden');
+vid.play().catch(()=>{});
+}
+});
+}
 
-        window.scrollTo(0,0);
+/* TIMELINE */
 
-        ['v1','v2','v3'].forEach(id => {
+function unlockTimeline(){
 
-            const vid =
-            document.getElementById(id);
+const section =
+document.getElementById('timelineSection');
 
-            if(vid){
+section.classList.remove('hidden');
 
-                vid.play().catch(()=>{});
-            }
-        });
-    }
+section.scrollIntoView({
+behavior:'smooth'
+});
+}
 
-    /* TIMELINE */
+/* FINAL */
 
-    function unlockTimeline(){
+function startFinalSurprise(){
 
-        document.getElementById('timelineSection')
-        .classList.remove('hidden');
+document.getElementById('act3')
+.classList.remove('hidden');
 
-        document.getElementById('timelineSection')
-        .scrollIntoView({
-            behavior:'smooth'
-        });
-    }
+document.getElementById('act3')
+.scrollIntoView({
+behavior:'smooth'
+});
 
-    /* FINAL */
+setTimeout(()=>{
 
-    function startFinalSurprise(){
+document.getElementById('bevdiFrame')
+.classList.add('clear-now');
 
-        document.getElementById('act3')
-        .classList.remove('hidden');
+const reveal =
+document.getElementById('revealAudio');
 
-        document.getElementById('act3')
-        .scrollIntoView({
-            behavior:'smooth'
-        });
+reveal.play().catch(()=>{});
 
-        setTimeout(() => {
+startPhotoSnow();
 
-            const reveal =
-            document.getElementById('reveal-audio');
+setTimeout(()=>{
 
-            if(reveal){
+typeFinalWish();
 
-                reveal.play().catch(()=>{});
-            }
+},12000);
 
-            document.getElementById('bevdiFrame')
-            .classList.add('clear-now');
+},3000);
+}
 
-            setTimeout(() => {
+/* PHOTO SNOW */
 
-                startPhotoSnow();
+let snowInterval;
 
-            }, 4000);
+function startPhotoSnow(){
 
-        }, 3000);
-    }
+if(snowInterval) return;
 
-    /* PHOTO SNOW */
+snowInterval = setInterval(()=>{
 
-    let snowInterval;
+const img =
+snowfallPhotos[
+Math.floor(
+Math.random() *
+snowfallPhotos.length
+)
+];
 
-    function startPhotoSnow(){
+const el =
+document.createElement('div');
 
-        if(snowInterval) return;
+el.className =
+'falling-photo polaroid';
 
-        snowInterval = setInterval(() => {
+el.style.left =
+(Math.random() * 80) + 'vw';
 
-            const img =
-            snowfallPhotos[
-                Math.floor(
-                    Math.random() *
-                    snowfallPhotos.length
-                )
-            ];
+el.style.animationDuration =
+(Math.random() * 2 + 4) + 's';
 
-            const el =
-            document.createElement('div');
+el.innerHTML = `
+<img src="${img}">
+<p class="pol-cap"
+style="font-size:0.5rem">
+Pillu 💜
+</p>
+`;
 
-            el.className =
-            'falling-photo polaroid';
+el.onclick = ()=>{
 
-            el.style.left =
-            (Math.random() * 80) + 'vw';
+viewPhoto(img);
+};
 
-            el.style.animationDuration =
-            (Math.random() * 2 + 4) + 's';
+document.body.appendChild(el);
 
-            el.onclick = (e) => {
+setTimeout(()=>{
 
-                e.stopPropagation();
+if(el.parentNode){
 
-                viewPhoto(img);
-            };
+el.remove();
+}
 
-            el.innerHTML = `
-                <img src="${img}">
-                <p class="pol-cap"
-                style="font-size:0.5rem">
-                Pillu 💜
-                </p>
-            `;
+},7000);
 
-            document.body.appendChild(el);
+},600);
+}
 
-            setTimeout(() => {
+/* VIEW PHOTO */
 
-                if(el.parentNode){
+function viewPhoto(img){
 
-                    el.remove();
-                }
+const viewer =
+document.getElementById('photoViewer');
 
-            }, 7000);
+const bigImg =
+document.getElementById('bigImg');
 
-        }, 600);
-    }
+bigImg.src = img;
 
-    /* VIEW PHOTO */
+viewer.style.display = 'flex';
 
-    function viewPhoto(img){
+setTimeout(()=>{
 
-        const bigImg =
-        document.getElementById('bigImg');
+viewer.style.display = 'none';
 
-        bigImg.src = img;
+},3000);
+}
 
-        document.getElementById('photoViewer')
-        .style.display = 'flex';
-    }
+/* FINAL MESSAGE */
 
-    function closeViewer(){
+const finalWish =
+"I Love You BonBon ❤️ Happy Birthday 🎂";
 
-        document.getElementById('photoViewer')
-        .style.display = 'none';
-    }
+function typeFinalWish(){
 
-    /* COUNTDOWN */
+const screen =
+document.getElementById('finalWishScreen');
 
-    setInterval(() => {
+const text =
+document.getElementById('finalWishText');
 
-        const timer =
-        document.getElementById('timer');
+screen.style.display = 'flex';
 
-        if(!timer) return;
+text.innerHTML = "";
 
-        const now =
-        new Date().getTime();
+let i = 0;
 
-        const diff =
-        targetDate - now;
+const interval =
+setInterval(()=>{
 
-        if(diff <= 0){
+text.innerHTML += finalWish[i];
 
-            timer.innerText =
-            "HAPPY BIRTHDAY! ❤️";
+i++;
 
-            return;
-        }
+if(i >= finalWish.length){
 
-        const days =
-        Math.floor(
-            diff / (1000 * 60 * 60 * 24)
-        );
+clearInterval(interval);
 
-        const hrs =
-        Math.floor(
-            (diff % (1000 * 60 * 60 * 24))
-            /
-            (1000 * 60 * 60)
-        );
+setTimeout(()=>{
 
-        const mins =
-        Math.floor(
-            (diff % (1000 * 60 * 60))
-            /
-            (1000 * 60)
-        );
+screen.style.display = 'none';
 
-        const secs =
-        Math.floor(
-            (diff % (1000 * 60))
-            / 1000
-        );
+startVoiceRecorder();
 
-        timer.innerText =
-        `${days}d ${hrs}h ${mins}m ${secs}s`;
+},4000);
+}
 
-    }, 1000);
+},120);
+}
+
+/* VOICE RECORDER */
+
+let mediaRecorder;
+
+let audioChunks = [];
+
+function startVoiceRecorder(){
+
+document.getElementById('feedbackScreen')
+.style.display = 'block';
+}
+
+const recordBtn =
+document.getElementById('recordBtn');
+
+recordBtn.onclick = async ()=>{
+
+if(
+!mediaRecorder ||
+mediaRecorder.state === "inactive"
+){
+
+const stream =
+await navigator.mediaDevices
+.getUserMedia({audio:true});
+
+mediaRecorder =
+new MediaRecorder(stream);
+
+audioChunks = [];
+
+mediaRecorder.ondataavailable = e=>{
+
+audioChunks.push(e.data);
+};
+
+mediaRecorder.onstop = ()=>{
+
+const blob =
+new Blob(audioChunks,{
+type:'audio/webm'
+});
+
+const url =
+URL.createObjectURL(blob);
+
+const player =
+document.getElementById('voicePlayback');
+
+player.src = url;
+
+player.style.display = 'block';
+
+stream.getTracks().forEach(track=>{
+
+track.stop();
+});
+
+document.getElementById('recordStatus')
+.innerText =
+"Recording Finished ❤️";
+};
+
+mediaRecorder.start();
+
+document.getElementById('recordStatus')
+.innerText =
+"Recording...";
+
+recordBtn.innerHTML = "⏹️";
+
+}else{
+
+mediaRecorder.stop();
+
+recordBtn.innerHTML = "🎙️";
+}
+}
+
+/* COUNTDOWN */
+
+setInterval(()=>{
+
+const timer =
+document.getElementById('timer');
+
+const now =
+new Date().getTime();
+
+const diff =
+targetDate - now;
+
+if(diff <= 0){
+
+timer.innerText =
+"HAPPY BIRTHDAY ❤️";
+
+return;
+}
+
+const days =
+Math.floor(
+diff / (1000*60*60*24)
+);
+
+const hrs =
+Math.floor(
+(diff % (1000*60*60*24))
+/
+(1000*60*60)
+);
+
+const mins =
+Math.floor(
+(diff % (1000*60*60))
+/
+(1000*60)
+);
+
+const secs =
+Math.floor(
+(diff % (1000*60))
+/1000
+);
+
+timer.innerText =
+`${days}d ${hrs}h ${mins}m ${secs}s`;
+
+},1000);
 
 </script>
 
