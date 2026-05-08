@@ -997,7 +997,15 @@ el.onclick = (e)=>{
 
 e.stopPropagation();
 
-el.style.animationPlayState = 'paused';
+el.style.pointerEvents = 'none';
+
+el.style.opacity = '0';
+
+setTimeout(()=>{
+
+el.remove();
+
+},100);
 
 viewPhoto(img);
 };
