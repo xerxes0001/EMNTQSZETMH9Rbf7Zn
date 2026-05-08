@@ -2,226 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Rajashree ❤️</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <style>
-        body { background-color: #080808; color: #ffffff; overflow-x: hidden; font-family: sans-serif; margin: 0; padding-bottom: 50px; scroll-behavior: smooth; }
+        /* MOBILE VIEWPORT FIX */
+        html, body { height: 100%; width: 100%; margin: 0; padding: 0; background-color: #080808; color: #ffffff; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         
-        /* 1. SCREENS/OVERLAYS */
         #lockOverlay, #startOverlay, #finalWishScreen, #feedbackScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 5000; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center; padding: 20px;
-            overflow: hidden;
+            align-items: center; justify-content: flex-start; /* Start from top for scrolling */
+            text-align: center; padding: 20px;
         }
         
-        #lockOverlay { background: #080808; z-index: 6000; }
-        
-        #startOverlay {
-            background: radial-gradient(circle, #e2c08d 0%, #c19a6b 100%);
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
-            overflow-y: auto; z-index: 5500;
+        #lockOverlay { background: #080808; z-index: 6000; justify-content: center; }
+        #startOverlay { background: radial-gradient(circle, #e2c08d 0%, #c19a6b 100%); z-index: 5500; overflow-y: auto; display: none; padding-top: 60px; padding-bottom: 100px; }
+
+        /* THE LETTER TEXT FIX */
+        #typewriterText { 
+            font-family: 'Georgia', serif; font-style: italic; 
+            font-size: 1.25rem; /* Increased size for mobile readability */
+            line-height: 1.8; color: #3d2b1f; 
+            width: 95%; /* Use full width on mobile */
+            max-width: 600px; /* Cap width on desktop */
+            margin: 0 auto;
+            text-align: center;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.2);
+            word-wrap: break-word;
         }
 
-        /* 2. LOCK & TIMER UI */
-        .lock-input { background: #1a1a1a; border: 2px solid #D1B3FF; color: white; padding: 15px; border-radius: 10px; text-align: center; outline: none; width: 250px; position: relative; z-index: 6001; }
-        .timer-box { font-family: monospace; font-size: 2.5rem; color: #ff4d4d; margin-top: 20px; letter-spacing: 2px; position: relative; z-index: 6001; text-shadow: 0 0 10px rgba(255, 77, 77, 0.5); }
-        .lock-btn { position: relative; z-index: 6001; }
-
-        /* LAVENDER FALLING HEARTS (Lock Screen Only) */
-        .falling-heart { 
-            position: absolute; top: -10%; color: #D1B3FF; font-size: 24px; 
-            z-index: 5999; animation: fallHeart linear forwards; pointer-events: none;
-        }
-        @keyframes fallHeart { to { transform: translateY(115vh) rotate(360deg); } }
-
-        /* 3. TYPEWRITER TEXT */
-        #typewriterText { font-family: 'Georgia', serif; font-style: italic; font-size: 1.2rem; line-height: 1.7; color: #3d2b1f; max-width: 600px; text-shadow: 1px 1px 0 rgba(255,255,255,0.2); }
         .word { opacity: 0; display: inline-block; margin-right: 5px; transition: opacity 0.4s ease; }
         .word.visible { opacity: 1; }
 
-        /* 4. PERFECT POLAROIDS (Timeline & Falling) */
-        .polaroid { background: #ffffff; padding: 10px 10px 35px 10px; border-radius: 2px; box-shadow: 0 10px 30px rgba(209, 179, 255, 0.3); width: 280px; margin: 20px auto; position: relative; z-index: 10; cursor: pointer;}
-        .timeline-polaroid { width: 90%; max-width: 320px; margin: 30px auto; }
-        .polaroid img, .polaroid video { width: 100%; height: auto; max-height: 400px; object-fit: contain; background: #000; display: block; }
-        .pol-cap { color: #333; text-align: center; font-style: italic; margin-top: 10px; font-weight: bold; font-size: 0.9rem; }
-
-        /* 5. TIMELINE FLOW */
-        .nickname-label { color: #D1B3FF; font-size: 1.8rem; font-weight: bold; margin-top: 50px; }
-        .arrow-connector { color: #444; font-size: 40px; margin: 15px 0; }
-        .video-strip { display: flex; overflow-x: auto; gap: 15px; padding: 20px; justify-content: flex-start; scroll-snap-type: x mandatory; }
-        @media (min-width: 600px) { .video-strip { justify-content: center; } }
-
-        /* 6. THE PERFECT FALLING PHOTOS (Act 3) */
+        /* INTERACTION FIX: CLICKABLE POLAROIDS */
         .falling-photo { 
             position: fixed; top: -25vh; z-index: 9000; 
-            width: 130px; padding: 6px; background: #fff; 
-            box-shadow: 0 5px 20px rgba(0,0,0,0.6); cursor: pointer;
+            width: 140px; padding: 6px; background: #fff; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             animation: fallPhoto linear forwards; 
+            touch-action: none;
         }
         @keyframes fallPhoto { to { transform: translateY(125vh) rotate(360deg); } }
-        
-        .heart-snow { position: fixed; font-size: 22px; z-index: 99; animation: floatUp linear infinite; pointer-events: none; color: #D1B3FF; }
-        @keyframes floatUp { from { transform: translateY(100vh); opacity: 1; } to { transform: translateY(-10vh); opacity: 0; } }
 
-        /* 7. THE TRIPLE FINALE */
-        #finalWishScreen { background: #080808; z-index: 9500; display: none; }
-        #finalWishText { font-family: 'Georgia', serif; font-style: italic; color: #D1B3FF; font-size: 2rem; max-width: 80%; }
+        .polaroid { background: #ffffff; padding: 10px 10px 35px 10px; border-radius: 2px; box-shadow: 0 10px 30px rgba(209, 179, 255, 0.3); width: 280px; margin: 20px auto; color: #333; }
+        .polaroid img, .polaroid video { width: 100%; height: auto; display: block; background: #000; }
+
+        /* TIMER & INPUTS */
+        .lock-input { background: #1a1a1a; border: 2px solid #D1B3FF; color: white; padding: 15px; border-radius: 12px; text-align: center; width: 85%; max-width: 300px; font-size: 1.2rem; }
+        .timer-box { font-family: monospace; font-size: 2.5rem; color: #ff4d4d; margin-top: 20px; font-weight: bold; }
+
+        /* FINALE */
+        #finalWishScreen { background: #080808; z-index: 9500; display: none; justify-content: center; }
+        #finalWishText { color: #D1B3FF; font-size: 2rem; font-style: italic; max-width: 90%; line-height: 1.4; }
         
-        #feedbackScreen { background: #0f0f0f; z-index: 9900; display: none; }
-        .record-btn { background: #ff4d4d; width: 70px; height: 70px; border-radius: 50%; border: 4px solid #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 20px auto; }
-        .record-btn.recording { animation: pulse 1s infinite; background: #fff; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        
-        /* LIGHTBOX */
-        .blur-reveal { filter: blur(40px); transition: filter 2.5s ease-in-out; }
-        .clear-now { filter: blur(0px) !important; }
-        #photoViewer { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 10000; align-items: center; justify-content: center; }
-        
-        #audio-storage { position: absolute; width: 0; height: 0; overflow: hidden; }
+        .falling-heart { position: absolute; top: -5%; color: #D1B3FF; font-size: 24px; animation: fallHeart linear forwards; pointer-events: none; }
+        @keyframes fallHeart { to { transform: translateY(110vh); } }
     </style>
 </head>
 <body onload="startLockHearts()">
 
     <div id="lockOverlay">
-        <h2 class="text-2xl mb-6 text-purple-300">Enter the Secret Code 🔐</h2>
-        <input type="text" id="passInput" class="lock-input mb-4" placeholder="Password">
-        <button onclick="checkPass()" class="lock-btn bg-purple-600 text-white px-10 py-3 rounded-full font-bold active:scale-95">Unlock Surprise</button>
-        <p id="errorMsg" class="mt-4 text-red-500 hidden" style="position: relative; z-index: 6001;">Try again! ❤️</p>
+        <h2 class="text-2xl mb-8 text-purple-300 font-bold">Enter the Secret Code 🔐</h2>
+        <input type="text" id="passInput" class="lock-input mb-6" placeholder="Password">
+        <button onclick="checkPass()" class="bg-purple-600 text-white px-14 py-4 rounded-full font-bold active:scale-95 shadow-lg">Unlock</button>
         <div class="timer-box" id="timer">00:00:00</div>
-        <p id="countdownMsg" class="text-gray-500 mt-2">Time is ticking...</p>
     </div>
 
-    <div id="startOverlay" class="hidden">
-        <h1 id="bdayHeader" class="text-3xl font-bold mb-6 mt-4" style="color: #3d2b1f;">Wait for it... ⏳</h1>
+    <div id="startOverlay">
+        <h1 id="bdayHeader" class="text-3xl font-bold mb-8" style="color: #3d2b1f;">Wait for it... ⏳</h1>
         <div id="typewriterText"></div>
-        <button id="giftBtn" onclick="startMainSite()" class="hidden bg-stone-800 text-amber-50 px-12 py-5 rounded-full mt-6 shadow-2xl">Open My Gift 🎁</button>
+        <button id="giftBtn" onclick="startMainSite()" class="hidden bg-stone-800 text-amber-50 px-12 py-5 rounded-full mt-10 shadow-2xl font-bold">Open My Gift 🎁</button>
     </div>
 
     <div id="audio-storage"></div>
     <audio id="reveal-audio" src="abhi-maza-ayagga (mp3cut.net).mp3"></audio>
 
     <div id="mainContent" class="hidden">
-        <div id="act1" class="p-6">
-            <h1 class="text-3xl font-bold mb-4 text-center">Our Story ❤️</h1>
-            <div class="video-strip">
-                <div class="polaroid" style="transform: rotate(-3deg);"><video id="v1" loop muted playsinline><source src="1778037251143.mp4"></video></div>
-                <div class="polaroid" style="transform: rotate(2deg);"><video id="v2" loop muted playsinline><source src="VID-20260124-WA0003(1).mp4"></video></div>
-                <div class="polaroid" style="transform: rotate(-1deg);"><video id="v3" loop muted playsinline><source src="doc_2026-05-06_13-28-43.mp4"></video></div>
+        <div id="act1" class="p-6 text-center">
+            <h1 class="text-4xl font-bold mb-10">Our Story ❤️</h1>
+            <div class="flex flex-col gap-10 items-center">
+                <div class="polaroid"><video id="v1" loop muted playsinline><source src="1778037251143.mp4"></video></div>
+                <div class="polaroid"><video id="v2" loop muted playsinline><source src="VID-20260124-WA0003(1).mp4"></video></div>
+                <div class="polaroid"><video id="v3" loop muted playsinline><source src="doc_2026-05-06_13-28-43.mp4"></video></div>
             </div>
-            <button onclick="unlockTimeline()" class="bg-purple-600 px-10 py-3 rounded-full mt-6 font-bold block mx-auto shadow-lg">Open the Timeline ↓</button>
+            <button onclick="unlockTimeline()" class="bg-purple-600 text-white px-14 py-4 rounded-full mt-12 font-bold shadow-xl">Open Timeline ↓</button>
         </div>
 
         <div id="act2" class="hidden p-6 text-center">
-            <div class="nickname-label">Pillu 🍼</div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('crybaby')"><img src="crybaby"><p class="pol-cap">Baby Pillu</p></div>
-            <div class="arrow-connector">↓</div>
-            
-            <div class="nickname-label">With Aaji ❤️</div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('aaji')"><img src="aaji"></div>
-            <div class="arrow-connector">↓</div>
-            
-            <div class="nickname-label">Haircut Days 💇‍♀️</div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('haircut-1')"><img src="haircut-1"></div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('haircut-2')"><img src="haircut-2"></div>
-            <div class="arrow-connector">↓</div>
-            
-            <div class="nickname-label">Traditional Vibes 🌸</div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('traditional')"><img src="traditional"></div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('menhdi')"><img src="menhdi"></div>
-            <div class="arrow-connector">↓</div>
-            
-            <div class="nickname-label">Trek & Adventure ⛰️</div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('trek')"><img src="trek"></div>
-            <div class="arrow-connector">↓</div>
-            
-            <div class="nickname-label">Holi Colors 🌈</div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('Holi-4')"><img src="Holi-4"></div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('Holi grp')"><img src="Holi grp"></div>
-            <div class="arrow-connector">↓</div>
-            
-            <div class="nickname-label">Style Icon 🕶️</div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('red shirt')"><img src="red shirt"></div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('kurta-1')"><img src="kurta-1"></div>
-            <div class="arrow-connector">↓</div>
-            
-            <div class="nickname-label">Gorgeous ❤️</div>
-            <div class="polaroid timeline-polaroid" onclick="viewPhoto('wedding')"><img src="wedding"></div>
-            
-            <button onclick="startFinalSurprise()" class="mt-16 mb-20 bg-gradient-to-r from-purple-500 to-indigo-400 text-black px-12 py-5 rounded-full font-bold shadow-2xl">Final Surprise ✨</button>
+            <div class="nickname-label text-purple-300 text-3xl font-bold mt-16">Bevdi ❤️</div>
+             <div class="polaroid" onclick="viewPhoto('wedding')"><img src="wedding"></div>
+             <button onclick="startFinalSurprise()" class="mt-24 bg-gradient-to-r from-purple-500 to-indigo-400 text-black px-14 py-6 rounded-full font-bold shadow-2xl">Final Surprise ✨</button>
         </div>
 
         <div id="act3" class="hidden min-h-screen flex items-center justify-center">
-            <div class="polaroid blur-reveal" id="bevdiFrame"><img src="bevdi"><p class="pol-cap" id="statusText">Wait...</p></div>
+            <div class="polaroid blur-reveal" id="bevdiFrame" style="width: 320px;"><img src="bevdi"><p class="pol-cap">Surprise!</p></div>
         </div>
     </div>
 
     <div id="finalWishScreen"><div id="finalWishText"></div></div>
     
-    <div id="feedbackScreen">
-        <h2 class="text-2xl text-purple-300 mb-4">Thoughts on the Gift? ❤️</h2>
-        <div id="recordBtn" class="record-btn">🎙️</div>
-        <p id="recordStatus" class="text-sm">Tap to Record for Indraneel</p>
-        <div id="playbackBox" class="hidden mt-6">
-            <audio id="voicePlayback" controls class="mx-auto"></audio>
-            <a id="downloadVoice" class="block mt-4 text-purple-400 underline">Download & Send to him 🚀</a>
-        </div>
+    <div id="feedbackScreen" class="bg-black">
+        <h2 class="text-3xl text-purple-300 mb-6">Thoughts? ❤️</h2>
+        <button id="recordBtn" class="w-24 h-24 bg-red-500 rounded-full border-4 border-white shadow-2xl">🎙️</button>
+        <p class="mt-6 text-lg">Tap to Record for Indraneel</p>
     </div>
 
-    <div id="photoViewer" onclick="this.style.display='none'"><div class="polaroid" style="max-width: 95vw; width: auto;"><img id="bigImg" src="" style="max-height: 80vh;"><p class="pol-cap">Tap to Close</p></div></div>
+    <div id="photoViewer" onclick="this.style.display='none'">
+        <div class="polaroid" style="width: 95vw; margin: 0;"><img id="bigImg" src=""><p class="text-center italic mt-4 text-black">Tap to Close</p></div>
+    </div>
 
     <script>
-        const message = "I first saw you during our 10th grade, and since then, I have had a crush on you. We had our verbal abuse competitions several times, and the second time, you were the clear winner. I was quite dumb, even when you tried to contact me through Telegram. I should have understood the obvious signs and the subtle hints you dropped like keeping good profile pictures, which I did save, just in case I ever found the courage to propose. But I never did. You know, destiny works in beautiful ways. You were the one who proposed to me; you were the one who caught the hint I dropped: 'You are blunt... Tu tondavar bolte sagla.' Then you practiced for a month just to propose to me on the very first day of the year—01/01/2026. This was the best New Year present for me—starting the year with the very person I love. I know I messed up quite a lot, but you understood my dumb behavior and forgave me so many times. I have hurt you, but it was never intentional, and it never will be. All I ever want is for you to be happy. Happy Birthday, BonBon / Pillu (Rajashree). I love you so much, my darling.";
+        const message = "I first saw you during our 10th grade, and since then, I have had a crush on you. We had our verbal abuse competitions several times, and the second time, you were the clear winner. I was quite dumb, even when you tried to contact me through Telegram. I should have understood the obvious signs and the subtle hints you dropped like keeping good profile pictures, which I did save, just in case I ever found the courage to propose. But I never did. You know, destiny works in beautiful ways. You were the one who proposed to me; you were the one who caught the hint I dropped: 'You are blunt... Tu tondavar bolte sagla.' Then you practiced for a month just to propose to me on the very first day of the year 01/01/2026. This was the best New Year present for me starting the year with the very person I love. I know I messed up quite a lot, but you understood my dumb behavior and forgave me so many times. I have hurt you, but it was never intentional, and it never will be. All I ever want is for you to be happy. Happy Birthday, BonBon / Pillu (Rajashree). I love you so much, my darling.";
         const wishMsg = "I love you BonBon. Wishing you a very happy Birthday! ❤️";
-        const allPhotos = ['crybaby', 'don', 'aaji', 'haircut-1', 'haircut-2', 'holi-2-1', 'kurta-1', 'kurta-2', 'menhdi', 'red shirt', 'red shirt-2', 'red shirt-3', 'red shirt-4', 'traditional', 'trek', 'wedding', 'Holi grp', 'Holi-4', 'IMG-20260123-WA0038(3).jpg', 'IMG-20260123-WA0039.jpg', 'IMG-20260123-WA0047.jpg', 'IMG-20260124-WA0007(1).jpg'];
+        const allPhotos = ['crybaby', 'don', 'aaji', 'haircut-1', 'haircut-2', 'traditional', 'trek', 'wedding', 'Holi-4', 'red shirt', 'kurta-1'];
         
-        let heartInterval;
-        let lockHeartInterval;
-        let photoSnowInterval;
-
-        // TEST MODE: Set to TRUE for testing now. Change to FALSE before sending.
-        let isBirthdayTime = true; 
-        
+        let isBirthdayTime = true; // TESTER: SET FALSE FOR BIRTHDAY LAUNCH
         const targetDate = new Date("May 9, 2026 00:00:00").getTime();
 
         function startLockHearts() {
-            lockHeartInterval = setInterval(() => {
+            setInterval(() => {
                 const h = document.createElement('div');
                 h.innerHTML = '❤️'; h.className = 'falling-heart';
-                h.style.left = Math.random() * 100 + 'vw';
-                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                h.style.left = Math.random() * 95 + 'vw';
+                h.style.animationDuration = (Math.random() * 2 + 4) + 's';
                 document.getElementById('lockOverlay').appendChild(h);
-                setTimeout(() => h.remove(), 5000);
-            }, 300);
+                setTimeout(() => h.remove(), 6000);
+            }, 400);
         }
-
-        setInterval(() => {
-            const now = new Date().getTime();
-            const diff = targetDate - now;
-            if (diff <= 0) { isBirthdayTime = true; document.getElementById('timer').innerText = "00:00:00"; }
-            else {
-                const hrs = Math.floor(diff / 3600000);
-                const mins = Math.floor((diff % 3600000) / 60000);
-                const secs = Math.floor((diff % 60000) / 1000);
-                document.getElementById('timer').innerText = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-            }
-        }, 1000);
 
         function checkPass() {
             if(document.getElementById('passInput').value === "BonBon") {
-                clearInterval(lockHeartInterval);
-                document.querySelectorAll('.falling-heart').forEach(h => h.remove());
                 document.getElementById('lockOverlay').style.display = 'none';
                 document.getElementById('startOverlay').style.display = 'flex';
-                document.getElementById('startOverlay').scrollTop = 0;
                 window.scrollTo(0, 0);
-                typeWriter(message, 'typewriterText', 'giftBtn');
-            } else { document.getElementById('errorMsg').classList.remove('hidden'); }
+                typeWriter(message, 'typewriterText', 'giftBtn', 180);
+            }
         }
 
-        function typeWriter(text, targetId, btnId) {
+        function typeWriter(text, targetId, btnId, speed) {
             const container = document.getElementById(targetId);
             container.innerHTML = "";
             const words = text.split(" ");
@@ -231,30 +151,20 @@
                 container.appendChild(span);
                 setTimeout(() => {
                     span.classList.add('visible');
-                    const overlay = document.getElementById('startOverlay');
-                    overlay.scrollTop = overlay.scrollHeight;
-                    if (i === words.length - 1 && isBirthdayTime) {
+                    // MOBILE FIX: Follow the text
+                    document.getElementById('startOverlay').scrollTop = document.getElementById('startOverlay').scrollHeight;
+                    if (i === words.length - 1 && isBirthdayTime && btnId) {
                         document.getElementById(btnId).classList.remove('hidden');
                     }
-                }, i * 200);
+                }, i * speed);
             });
         }
 
         function startMainSite() {
             document.getElementById('startOverlay').style.display = 'none';
             document.getElementById('mainContent').classList.remove('hidden');
-            window.scrollTo(0, 0);
             document.getElementById('audio-storage').innerHTML = '<iframe width="0" height="0" src="https://www.youtube.com/embed/QJO3ROT-A4E?autoplay=1&loop=1&playlist=QJO3ROT-A4E" frameborder="0" allow="autoplay"></iframe>';
             document.getElementById('v1').play(); document.getElementById('v2').play(); document.getElementById('v3').play();
-            
-            heartInterval = setInterval(() => {
-                const h = document.createElement('div');
-                h.innerHTML = '💜'; h.className = 'heart-snow';
-                h.style.left = Math.random() * 100 + 'vw';
-                h.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                document.body.appendChild(h);
-                setTimeout(() => h.remove(), 5000);
-            }, 300);
         }
 
         function unlockTimeline() {
@@ -269,34 +179,38 @@
                 document.getElementById('audio-storage').innerHTML = ""; 
                 document.getElementById('reveal-audio').play(); 
                 document.getElementById('bevdiFrame').classList.add('clear-now');
-                document.getElementById('statusText').innerText = "ABHI MAZA AAYEGA! 😎";
-                setTimeout(() => { startPhotoSnow(); }, 4000);
-            }, 3500); 
+                setTimeout(() => { startPhotoSnow(); }, 3500);
+            }, 3000); 
         }
 
         function startPhotoSnow() {
-            photoSnowInterval = setInterval(() => {
+            const snowInterval = setInterval(() => {
                 const img = allPhotos[Math.floor(Math.random() * allPhotos.length)];
                 const el = document.createElement('div');
                 el.className = 'falling-photo';
                 el.style.left = Math.random() * 80 + 'vw';
-                el.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                el.style.animationDuration = (Math.random() * 2 + 5) + 's';
+                
+                // MOBILE INTERACTION FIX
+                el.addEventListener('touchstart', (e) => { e.preventDefault(); viewPhoto(img); });
                 el.onclick = () => viewPhoto(img);
-                el.innerHTML = `<img src="${img}"><p class="pol-cap">Pillu 💜</p>`;
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 5000);
-            }, 600);
 
+                el.innerHTML = `<img src="${img}"><p class="pol-cap" style="font-size:0.6rem; color:#333">Pillu 💜</p>`;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 7000);
+            }, 750);
+
+            // 60 SECONDS OF SNOW
             setTimeout(() => {
-                clearInterval(photoSnowInterval);
+                clearInterval(snowInterval);
                 document.getElementById('mainContent').style.display = 'none';
                 document.getElementById('finalWishScreen').style.display = 'flex';
-                typeWriter(wishMsg, 'finalWishText');
+                typeWriter(wishMsg, 'finalWishText', null, 250);
                 setTimeout(() => {
                     document.getElementById('finalWishScreen').style.display = 'none';
                     document.getElementById('feedbackScreen').style.display = 'flex';
-                }, 8000);
-            }, 18000); 
+                }, 12000);
+            }, 60000); 
         }
 
         function viewPhoto(img) {
@@ -304,23 +218,20 @@
             document.getElementById('photoViewer').style.display = 'flex';
         }
 
-        let mediaRecorder; let chunks = [];
-        document.getElementById('recordBtn').onclick = async () => {
-            const btn = document.getElementById('recordBtn');
-            if(!mediaRecorder || mediaRecorder.state === 'inactive') {
-                const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.ondataavailable = e => chunks.push(e.data);
-                mediaRecorder.onstop = () => {
-                    const blob = new Blob(chunks, {type:'audio/ogg'});
-                    const url = URL.createObjectURL(blob);
-                    document.getElementById('voicePlayback').src = url;
-                    document.getElementById('downloadVoice').href = url;
-                    document.getElementById('playbackBox').classList.remove('hidden');
-                };
-                chunks = []; mediaRecorder.start(); btn.classList.add('recording');
-            } else { mediaRecorder.stop(); btn.classList.remove('recording'); }
-        };
+        // TIMER LOGIC
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+            if (diff <= 0) {
+                isBirthdayTime = true;
+                document.getElementById('timer').innerText = "00:00:00";
+            } else {
+                const hrs = Math.floor(diff / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById('timer').innerText = `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+            }
+        }, 1000);
     </script>
 </body>
 </html>
