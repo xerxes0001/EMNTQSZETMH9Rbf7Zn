@@ -15,8 +15,6 @@
             background: #080808; z-index: 9000; display: flex; flex-direction: column;
             align-items: center; justify-content: center; text-align: center;
         }
-
-        /* LAVENDER SHADOW HEARTS - PERSISTENT */
         .falling-heart { 
             position: fixed; top: -5vh; 
             color: #D1B3FF !important; 
@@ -31,7 +29,7 @@
             display: none; width: 100%; height: 100vh;
             background: radial-gradient(circle, #e2c08d 0%, #c19a6b 100%);
             z-index: 5500; flex-direction: column; align-items: center; 
-            padding: 100px 20px 150px 20px; 
+            padding: 80px 20px 150px 20px; 
             box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
             overflow-y: scroll; scroll-behavior: smooth;
         }
@@ -46,8 +44,8 @@
         .nickname-label { color: #D1B3FF; font-size: 2.2rem; font-weight: bold; margin-top: 60px; text-align: center; }
         .arrow-connector { color: #444; font-size: 45px; margin: 20px 0; text-align: center; }
 
-        /* 4. PHOTO SNOWFALL */
-        .falling-photo { position: fixed; top: -25vh; z-index: 8000; width: 115px; padding: 5px; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.5); cursor: pointer; animation: fallDown linear forwards; }
+        /* 4. PHOTO SNOWFALL (YESTERDAY'S WORKING STYLE) */
+        .falling-photo { position: fixed; top: -25vh; z-index: 8000; width: 125px; padding: 6px; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.5); cursor: pointer; animation: fallDown linear forwards; }
         @keyframes fallDown { to { transform: translateY(125vh) rotate(360deg); } }
 
         /* 5. FINALE */
@@ -59,7 +57,6 @@
         
         .record-btn { background: #ff4d4d; width: 85px; height: 85px; border-radius: 50%; border: 4px solid #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
         .record-btn.recording { animation: pulse 1s infinite; background: #fff; color: #ff4d4d; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body onload="startLockHearts()">
@@ -68,7 +65,7 @@
         <h2 class="text-2xl mb-8 text-purple-300 font-bold" style="position:relative; z-index:10000">Enter the Secret Code 🔐</h2>
         <input type="text" id="passInput" class="bg-zinc-900 border-2 border-purple-400 p-4 rounded-xl mb-6 text-center text-xl w-64 outline-none text-white" placeholder="Password" style="position:relative; z-index:10000">
         <button onclick="checkPass()" class="bg-purple-600 text-white px-14 py-4 rounded-full font-bold active:scale-95 shadow-lg" style="position:relative; z-index:10000">Unlock Surprise</button>
-        <div id="timer" class="mt-6 text-2xl font-mono text-red-500" style="position:relative; z-index:10000">Calculating...</div>
+        <div id="timer" class="mt-6 text-2xl font-mono text-red-500" style="position:relative; z-index:10000">00:00:00</div>
     </div>
 
     <div id="startOverlay">
@@ -83,6 +80,7 @@
     <div id="mainContent" class="hidden">
         <div class="p-6 text-center">
             <h1 class="text-4xl font-bold mb-12 text-purple-300">Our Story ❤️</h1>
+            
             <div class="polaroid"><video id="v1" loop muted playsinline><source src="1778037251143.mp4" type="video/mp4"></video><p class="pol-cap">Gorgeous ❤️</p></div>
             <div class="polaroid"><video id="v2" loop muted playsinline><source src="VID-20260124-WA0003(1).mp4" type="video/mp4"></video><p class="pol-cap">Don 😎</p></div>
             <div class="polaroid"><video id="v3" loop muted playsinline><source src="doc_2026-05-06_13-28-43.mp4" type="video/mp4"></video><p class="pol-cap">Pillu 🍼</p></div>
@@ -91,29 +89,43 @@
             
             <div id="timelineSection" class="hidden">
                 <div class="nickname-label">Pillu 🍼</div>
-                <div class="polaroid" onclick="viewPhoto('crybaby')"><img src="crybaby" onerror="this.src='crybaby.jpg'"><p class="pol-cap">Where it started</p></div>
-                <div class="polaroid" onclick="viewPhoto('don')"><img src="don" onerror="this.src='don.jpg'"></div>
+                <div class="polaroid" onclick="viewPhoto('crybaby.jpg')"><img src="crybaby.jpg"><p class="pol-cap">Where it started</p></div>
+                <div class="polaroid" onclick="viewPhoto('don.jpg')"><img src="don.jpg"></div>
                 <div class="arrow-connector">↓</div>
+                
                 <div class="nickname-label">With Aaji ❤️</div>
-                <div class="polaroid" onclick="viewPhoto('aaji')"><img src="aaji" onerror="this.src='aaji.jpg'"></div>
+                <div class="polaroid" onclick="viewPhoto('aaji.jpg')"><img src="aaji.jpg"></div>
+                <div class="polaroid" onclick="viewPhoto('aaji-2.jpg')"><img src="aaji-2.jpg"></div>
                 <div class="arrow-connector">↓</div>
+
                 <div class="nickname-label">The Haircut Days 💇‍♀️</div>
-                <div class="polaroid" onclick="viewPhoto('haircut-1')"><img src="haircut-1" onerror="this.src='haircut-1.jpg'"></div>
+                <div class="polaroid" onclick="viewPhoto('haircut-1.jpg')"><img src="haircut-1.jpg"></div>
+                <div class="polaroid" onclick="viewPhoto('haircut-2.jpg')"><img src="haircut-2.jpg"></div>
                 <div class="arrow-connector">↓</div>
+
                 <div class="nickname-label">Traditional Vibes 🌸</div>
-                <div class="polaroid" onclick="viewPhoto('traditional')"><img src="traditional" onerror="this.src='traditional.jpg'"></div>
+                <div class="polaroid" onclick="viewPhoto('traditional.jpg')"><img src="traditional.jpg"></div>
+                <div class="polaroid" onclick="viewPhoto('menhdi.jpg')"><img src="menhdi.jpg"></div>
                 <div class="arrow-connector">↓</div>
+
+                <div class="nickname-label">Trek & Holi ⛰️🌈</div>
+                <div class="polaroid" onclick="viewPhoto('trek.jpg')"><img src="trek.jpg"></div>
+                <div class="polaroid" onclick="viewPhoto('holi-2-1.jpg')"><img src="holi-2-1.jpg"></div>
+                <div class="arrow-connector">↓</div>
+
                 <div class="nickname-label">Gorgeous ❤️</div>
-                <div class="polaroid" onclick="viewPhoto('wedding')"><img src="wedding" onerror="this.src='wedding.jpg'"></div>
+                <div class="polaroid" onclick="viewPhoto('wedding.jpg')"><img src="wedding.jpg"></div>
+                
                 <button onclick="startFinalSurprise()" class="mt-28 mb-44 bg-gradient-to-r from-purple-500 to-indigo-400 text-black px-16 py-7 rounded-full font-bold shadow-2xl">Final Surprise ✨</button>
             </div>
         </div>
         <div id="act3" class="hidden min-h-screen flex items-center justify-center">
-            <div class="polaroid blur-reveal" id="bevdiFrame" style="width: 320px;"><img src="bevdi" onerror="this.src='bevdi.jpg'"><p class="pol-cap">Wait for it...</p></div>
+            <div class="polaroid blur-reveal" id="bevdiFrame" style="width: 320px;"><img src="bevdi.jpg"><p class="pol-cap">Wait for it...</p></div>
         </div>
     </div>
 
     <div id="finalWishScreen"><div id="finalWishText" class="font-serif italic p-6 text-2xl text-purple-200"></div></div>
+    
     <div id="feedbackScreen">
         <h2 class="text-3xl text-purple-300 mb-8 font-bold text-center">Any Thoughts? ❤️</h2>
         <div id="recordBtn" class="record-btn mx-auto shadow-2xl">🎙️</div>
@@ -129,10 +141,9 @@
     <script>
         const message = "I first saw you during our 10th grade, and since then, I have had a crush on you. We had our verbal abuse competitions several times, and the second time, you were the clear winner. I was quite dumb, even when you tried to contact me through Telegram. I should have understood the obvious signs and the subtle hints you dropped—like keeping good profile pictures, which I did save, just in case I ever found the courage to propose. But I never did. You know, destiny works in beautiful ways. You were the one who proposed to me; you were the one who caught the hint I dropped: 'You are blunt... Tu tondavar bolte sagla.' Then you practiced for a month just to propose to me on the very first day of the year—01/01/2026. This was the best New Year present for me—starting the year with the very person I love. I know I messed up quite a lot, but you understood my dumb behavior and forgave me so many times. I have hurt you, but it was never intentional, and it never will be. All I ever want is for you to be happy. Happy Birthday, BonBon / Pillu (Rajashree). I love you so much, my darling.";
         const wishMsg = "I love you BonBon. Wishing you a very happy Birthday! ❤️";
-        const snowfallPhotos = ['crybaby', 'don', 'aaji', 'aaji-2', 'haircut-1', 'haircut-2', 'traditional', 'menhdi', 'trek', 'holi-2-1', 'Holi-4', 'Holi grp', 'kurta-1', 'kurta-2', 'red shirt', 'red shirt-2', 'red shirt-3', 'red shirt-4', 'wedding', 'bevdi', 'IMG-20260123-WA0038(3).jpg', 'IMG-20260123-WA0039.jpg'];
+        
+        const snowfallPhotos = ['crybaby.jpg', 'don.jpg', 'aaji.jpg', 'aaji-2.jpg', 'haircut-1.jpg', 'haircut-2.jpg', 'haircut-3.jpg', 'traditional.jpg', 'traditional-2.jpg', 'menhdi.jpg', 'holi-2-1.jpg', 'Holi-4.jpg', 'Holi grp.jpg', 'trek.jpg', 'kurta-1.jpg', 'kurta-2.jpg', 'red shirt.jpg', 'red shirt-2.jpg', 'red shirt-3.jpg', 'red shirt-4.jpg', 'wedding.jpg', 'bevdi.jpg', 'IMG-20260123-WA0038(3).jpg', 'IMG-20260123-WA0039.jpg', 'IMG-20260123-WA0047.jpg', 'IMG-20260124-WA0007(1).jpg', 'IMG-20260129-WA0025(1).jpg', 'photo.jpg'];
 
-        let isBirthdayTime = false; 
-        // SET TARGET TO MAY 9 MIDNIGHT
         const targetDate = new Date("May 9, 2026 00:00:00").getTime();
 
         function startLockHearts() {
@@ -166,7 +177,8 @@
                 setTimeout(() => {
                     span.classList.add('visible');
                     overlay.scrollTop = overlay.scrollHeight;
-                    if (i === words.length - 1 && isBirthdayTime && btnId) {
+                    // REMOVED TIME RESTRICTION FOR BUTTON
+                    if (i === words.length - 1 && btnId) {
                         document.getElementById(btnId).classList.remove('hidden');
                         overlay.scrollTop = overlay.scrollHeight;
                     }
@@ -202,7 +214,7 @@
                 const img = snowfallPhotos[Math.floor(Math.random() * snowfallPhotos.length)];
                 const el = document.createElement('div');
                 el.className = 'falling-photo polaroid';
-                el.style.left = Math.random() * 85 + 'vw';
+                el.style.left = (Math.random() * 80) + 'vw';
                 el.style.animationDuration = (Math.random() * 2 + 4) + 's';
                 el.onclick = (e) => { e.stopPropagation(); viewPhoto(img); };
                 el.innerHTML = `<img src="${img}" onerror="this.src='${img}.jpg'"><p class="pol-cap" style="font-size:0.5rem">Pillu 💜</p>`;
@@ -218,8 +230,8 @@
             document.getElementById('photoViewer').style.display = 'flex';
         }
 
-        const recordBtn = document.getElementById('recordBtn');
         let mediaRecorder; let chunks = [];
+        const recordBtn = document.getElementById('recordBtn');
         recordBtn.onclick = async () => {
             const musicIframe = document.getElementById('bgMusic');
             if(!mediaRecorder || mediaRecorder.state === 'inactive') {
@@ -243,15 +255,10 @@
             }
         };
 
-        // COUNTDOWN TIMER FIX
         setInterval(() => {
             const now = new Date().getTime();
             const diff = targetDate - now;
-            if (diff <= 0) { 
-                isBirthdayTime = true; 
-                document.getElementById('timer').innerText = "HAPPY BIRTHDAY! ❤️"; 
-                document.getElementById('giftBtn').classList.remove('hidden'); // Ensure button shows up at midnight
-            }
+            if (diff <= 0) { document.getElementById('timer').innerText = "HAPPY BIRTHDAY! ❤️"; }
             else {
                 const hrs = Math.floor(diff / 3600000);
                 const mins = Math.floor((diff % 3600000) / 60000);
