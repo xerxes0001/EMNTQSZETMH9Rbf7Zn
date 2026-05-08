@@ -1,6 +1,727 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>For Rajashree ❤️</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+html,
+body{
+    margin:0;
+    padding:0;
+    overflow-x:hidden;
+    background:#080808;
+    color:white;
+    font-family:sans-serif;
+    max-width:100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body{
+    position:relative;
+}
+
+/* LOCK SCREEN */
+
+#lockOverlay{
+    position:fixed;
+    inset:0;
+    background:#080808;
+    z-index:9999;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* HEARTS */
+
+.falling-heart{
+    position:fixed;
+    top:-10vh;
+    color:#d8b4fe;
+    font-size:28px;
+    pointer-events:none;
+    z-index:1;
+
+    animation:heartFall linear forwards;
+}
+
+@keyframes heartFall{
+    to{
+        transform:translateY(120vh) rotate(360deg);
+    }
+}
+
+/* START OVERLAY */
+
+#startOverlay{
+    display:none;
+
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle,#f5d0a9 0%,#c89f72 100%);
+
+    color:#3d2b1f;
+
+    padding:70px 20px 120px;
+
+    flex-direction:column;
+    align-items:center;
+
+    overflow-y:auto;
+}
+
+#typewriterText{
+    max-width:700px;
+    line-height:1.9;
+    font-size:1.2rem;
+    text-align:center;
+    font-style:italic;
+}
+
+.word{
+    opacity:0;
+    transition:0.3s;
+    margin-right:5px;
+}
+
+.word.visible{
+    opacity:1;
+}
+
+/* MAIN */
+
+#mainContent{
+    display:none;
+}
+
+.polaroid{
+    width:300px;
+
+    background:white;
+    color:black;
+
+    padding:10px 10px 30px;
+
+    margin:30px auto;
+
+    border-radius:4px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.7);
+}
+
+.polaroid img,
+.polaroid video{
+    width:100%;
+    border-radius:6px;
+    display:block;
+    object-fit:cover;
+}
+
+.pol-cap{
+    text-align:center;
+    margin-top:10px;
+    font-weight:bold;
+    font-style:italic;
+}
+
+.nickname-label{
+    text-align:center;
+    margin-top:70px;
+    font-size:2rem;
+    color:#d8b4fe;
+    font-weight:bold;
+}
+
+.arrow-connector{
+    text-align:center;
+    font-size:45px;
+    margin:15px 0;
+}
+
+/* PHOTO FALL */
+
+.falling-photo{
+    position:fixed;
+    top:-30vh;
+    width:160px;
+
+    z-index:999;
+
+    animation:photoFall linear forwards;
+
+    will-change:transform;
+}
+
+@keyframes photoFall{
+    to{
+        transform:
+        translateY(130vh)
+        rotate(360deg);
+    }
+}
+
+/* VIEWER */
+
+#photoViewer{
+    display:none;
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,0.96);
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:12000;
+}
+
+#photoViewer img{
+    max-width:95vw;
+    max-height:90vh;
+    border-radius:12px;
+}
+
+/* FINAL */
+
+.blur-reveal{
+    filter:blur(40px);
+    transition:3s;
+}
+
+.clear-now{
+    filter:blur(0px)!important;
+}
+
+/* TIMER */
+
+#timer{
+    margin-top:25px;
+    font-size:1.6rem;
+    color:#ff4d4d;
+    font-family:monospace;
+}
+
+</style>
+</head>
+
+<body onload="startLockHearts()">
+
+<!-- LOCK -->
+
+<div id="lockOverlay">
+
+    <h2 class="text-3xl mb-8 text-purple-300 font-bold">
+        Enter the Secret Code 🔐
+    </h2>
+
+    <input
+        id="passInput"
+        type="text"
+        placeholder="Password"
+        class="bg-zinc-900 border-2 border-purple-400 p-4 rounded-xl text-center text-xl w-72 outline-none"
+    >
+
+    <button
+        onclick="checkPass()"
+        class="bg-purple-600 px-12 py-4 rounded-full mt-6 font-bold"
+    >
+        Unlock Surprise
+    </button>
+
+    <div id="timer"></div>
+
+</div>
+
+<!-- START -->
+
+<div id="startOverlay">
+
+    <h1 class="text-4xl font-bold mb-8">
+        Happy Birthday Rajashree 🎂
+    </h1>
+
+    <div id="typewriterText"></div>
+
+    <button
+        id="giftBtn"
+        onclick="startMainSite()"
+        class="hidden bg-black text-white px-12 py-5 rounded-full mt-12 font-bold"
+    >
+        Open My Gift 🎁
+    </button>
+
+</div>
+
+<!-- MAIN -->
+
+<div id="mainContent">
+
+    <div class="p-6 text-center">
+
+        <h1 class="text-5xl font-bold text-purple-300 mb-14">
+            Our Story ❤️
+        </h1>
+
+        <!-- VIDEOS -->
+
+        <div class="polaroid">
+            <video id="v1" loop muted playsinline preload="metadata">
+                <source src="video1.mp4" type="video/mp4">
+            </video>
+            <p class="pol-cap">Gorgeous ❤️</p>
+        </div>
+
+        <div class="polaroid">
+            <video id="v2" loop muted playsinline preload="metadata">
+                <source src="video2.mp4" type="video/mp4">
+            </video>
+            <p class="pol-cap">Don 😎</p>
+        </div>
+
+        <div class="polaroid">
+            <video id="v3" loop muted playsinline preload="metadata">
+                <source src="video3.mp4" type="video/mp4">
+            </video>
+            <p class="pol-cap">Pillu 🍼</p>
+        </div>
+
+        <button
+            onclick="unlockTimeline()"
+            class="bg-purple-600 px-14 py-5 rounded-full mt-16 font-bold"
+        >
+            Open Timeline ↓
+        </button>
+
+        <!-- TIMELINE -->
+
+        <div id="timelineSection" class="hidden">
+
+            <div class="nickname-label">
+                Mehndi 🌸
+            </div>
+
+            <div class="polaroid" onclick="viewPhoto('mehndi.jpg')">
+                <img src="mehndi.jpg">
+                <p class="pol-cap">Beautiful ❤️</p>
+            </div>
+
+            <div class="arrow-connector">↓</div>
+
+            <div class="nickname-label">
+                Wedding ✨
+            </div>
+
+            <div class="polaroid" onclick="viewPhoto('wedding.jpg')">
+                <img src="wedding.jpg">
+            </div>
+
+            <div class="arrow-connector">↓</div>
+
+            <div class="nickname-label">
+                Holi 🌈
+            </div>
+
+            <div class="polaroid" onclick="viewPhoto('holi.jpg')">
+                <img src="holi.jpg">
+            </div>
+
+            <div class="arrow-connector">↓</div>
+
+            <div class="nickname-label">
+                Red Shirt Era ❤️
+            </div>
+
+            <div class="polaroid" onclick="viewPhoto('red-shirt.jpg')">
+                <img src="red-shirt.jpg">
+            </div>
+
+            <div class="polaroid" onclick="viewPhoto('red-shirt-2.jpg')">
+                <img src="red-shirt-2.jpg">
+            </div>
+
+            <div class="arrow-connector">↓</div>
+
+            <div class="nickname-label">
+                Favorite Moments ✨
+            </div>
+
+            <div class="polaroid" onclick="viewPhoto('photo.jpg')">
+                <img src="photo.jpg">
+            </div>
+
+            <button
+                onclick="startFinalSurprise()"
+                class="mt-24 mb-32 bg-gradient-to-r from-purple-500 to-pink-400 text-black px-14 py-6 rounded-full font-bold"
+            >
+                Final Surprise ✨
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- FINAL ACT -->
+
+    <div
+        id="act3"
+        class="hidden min-h-screen flex items-center justify-center"
+    >
+
+        <div
+            id="bevdiFrame"
+            class="polaroid blur-reveal"
+        >
+            <img src="photo.jpg">
+            <p class="pol-cap">Wait for it...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- PHOTO VIEWER -->
+
+<div id="photoViewer" onclick="closeViewer()">
+    <img id="bigImg">
+</div>
+
+<!-- AUDIO -->
+
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<audio id="revealAudio">
+    <source src="reveal.mp3" type="audio/mp3">
+</audio>
+
+<script>
+
+/* MESSAGE */
+
+const message =
+`I first saw you during our 10th grade, and since then,
+I have had a crush on you.
+You became one of the most special people in my life.
+Thank you for every smile, every moment and every memory.
+Happy Birthday BonBon ❤️`;
+
+/* PHOTOS */
+
+const snowfallPhotos = [
+
+    'holi.jpg',
+    'wedding.jpg',
+    'mehndi.jpg',
+    'red-shirt.jpg',
+    'red-shirt-2.jpg',
+    'traditional.jpg',
+    'kurta-1.jpg',
+    'kurta-2.jpg',
+    'photo.jpg'
+
+];
+
+/* HEARTS */
+
+function startLockHearts(){
+
+    setInterval(()=>{
+
+        const heart = document.createElement('div');
+
+        heart.className = 'falling-heart';
+
+        heart.innerHTML = '❤️';
+
+        heart.style.left =
+        Math.random() * 95 + 'vw';
+
+        heart.style.animationDuration =
+        (Math.random() * 3 + 3) + 's';
+
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },7000);
+
+    },350);
+}
+
+/* PASSWORD */
+
+function checkPass(){
+
+    const value =
+    document.getElementById('passInput')
+    .value
+    .trim()
+    .toLowerCase();
+
+    if(value === 'bonbon'){
+
+        document.getElementById('lockOverlay')
+        .style.display = 'none';
+
+        document.getElementById('startOverlay')
+        .style.display = 'flex';
+
+        const music =
+        document.getElementById('bgMusic');
+
+        music.volume = 0.6;
+
+        music.play().catch(()=>{});
+
+        typeWriter(message);
+
+    }else{
+
+        alert("Wrong Password ❤️");
+    }
+}
+
+/* TYPEWRITER */
+
+function typeWriter(text){
+
+    const container =
+    document.getElementById('typewriterText');
+
+    const words = text.split(" ");
+
+    words.forEach((word,index)=>{
+
+        const span =
+        document.createElement('span');
+
+        span.className = 'word';
+
+        span.innerText = word;
+
+        container.appendChild(span);
+
+        setTimeout(()=>{
+
+            span.classList.add('visible');
+
+            if(index === words.length - 1){
+
+                document.getElementById('giftBtn')
+                .classList.remove('hidden');
+            }
+
+        },index * 180);
+
+    });
+}
+
+/* MAIN */
+
+function startMainSite(){
+
+    document.getElementById('startOverlay')
+    .style.display = 'none';
+
+    document.getElementById('mainContent')
+    .style.display = 'block';
+
+    ['v1','v2','v3'].forEach(id=>{
+
+        const vid =
+        document.getElementById(id);
+
+        if(vid){
+
+            vid.play().catch(()=>{});
+        }
+    });
+
+    window.scrollTo(0,0);
+}
+
+/* TIMELINE */
+
+function unlockTimeline(){
+
+    const section =
+    document.getElementById('timelineSection');
+
+    section.classList.remove('hidden');
+
+    section.scrollIntoView({
+        behavior:'smooth'
+    });
+}
+
+/* FINAL */
+
+function startFinalSurprise(){
+
+    document.getElementById('act3')
+    .classList.remove('hidden');
+
+    document.getElementById('act3')
+    .scrollIntoView({
+        behavior:'smooth'
+    });
+
+    setTimeout(()=>{
+
+        document.getElementById('bevdiFrame')
+        .classList.add('clear-now');
+
+        const reveal =
+        document.getElementById('revealAudio');
+
+        reveal.play().catch(()=>{});
+
+        startPhotoSnow();
+
+    },3000);
+}
+
+/* PHOTO SNOW */
+
+let snowInterval;
+
+function startPhotoSnow(){
+
+    if(snowInterval) return;
+
+    snowInterval = setInterval(()=>{
+
+        const randomPhoto =
+        snowfallPhotos[
+            Math.floor(
+                Math.random() *
+                snowfallPhotos.length
+            )
+        ];
+
+        const photo =
+        document.createElement('div');
+
+        photo.className =
+        'falling-photo polaroid';
+
+        photo.style.left =
+        Math.random() * 90 + 'vw';
+
+        photo.style.animationDuration =
+        (Math.random() * 3 + 5) + 's';
+
+        photo.innerHTML = `
+            <img src="${randomPhoto}">
+            <p class="pol-cap">❤️</p>
+        `;
+
+        photo.onclick = (e)=>{
+
+            e.stopPropagation();
+
+            viewPhoto(randomPhoto);
+        };
+
+        document.body.appendChild(photo);
+
+        setTimeout(()=>{
+
+            if(photo.parentNode){
+
+                photo.remove();
+            }
+
+        },9000);
+
+    },600);
+}
+
+/* VIEW PHOTO */
+
+function viewPhoto(img){
+
+    document.getElementById('bigImg')
+    .src = img;
+
+    document.getElementById('photoViewer')
+    .style.display = 'flex';
+}
+
+function closeViewer(){
+
+    document.getElementById('photoViewer')
+    .style.display = 'none';
+}
+
+/* TIMER */
+
+const targetDate =
+new Date("May 9, 2026 00:00:00").getTime();
+
+setInterval(()=>{
+
+    const now = new Date().getTime();
+
+    const diff = targetDate - now;
+
+    if(diff <= 0){
+
+        document.getElementById('timer')
+        .innerText =
+        "HAPPY BIRTHDAY ❤️";
+
+        return;
+    }
+
+    const days =
+    Math.floor(diff / (1000*60*60*24));
+
+    const hrs =
+    Math.floor(
+        (diff % (1000*60*60*24))
+        /
+        (1000*60*60)
+    );
+
+    const mins =
+    Math.floor(
+        (diff % (1000*60*60))
+        /
+        (1000*60)
+    );
+
+    const secs =
+    Math.floor(
+        (diff % (1000*60))
+        /1000
+    );
+
+    document.getElementById('timer')
+    .innerText =
+    `${days}d ${hrs}h ${mins}m ${secs}s`;
+
+},1000);
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Rajashree ❤️</title>
